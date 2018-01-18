@@ -1,8 +1,13 @@
+package com.inventorsoft.console;
+
+import com.inventorsoft.model.Student;
 import com.inventorsoft.model.Teacher;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Nina on 11.01.2018.
@@ -10,6 +15,8 @@ import java.io.InputStreamReader;
 public class ConsoleInterface {
 
 	private static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+	private static String input;
 
 	public static void main(String[] args){
 		System.out.println("Start of Testing Application");
@@ -28,7 +35,7 @@ public class ConsoleInterface {
 				int command = Integer.parseInt(bufferedReader.readLine());
 				switch (command) {
 					case 1:
-						//teacherLogin();
+						teacherLogin();
 						break;
 					case 2:
 						teacherRegistration();
@@ -37,7 +44,7 @@ public class ConsoleInterface {
 						//studentLogin();
 						break;
 					case 4:
-						//studentRegistration();
+						studentRegistration();
 						break;
 					case 5:
 						System.exit(0);
@@ -53,17 +60,13 @@ public class ConsoleInterface {
 		}
 	}
 
-
-	private static void teacherRegistration() throws IOException{
-		String input;
-
-		System.out.println("Teacher registration. Enter number 1 to exit registration");
+	private static void studentRegistration() throws IOException{
 
 		while(true) {
 			System.out.println("Enter name and surname:");
 			input = bufferedReader.readLine();
 
-			if(isExit(input)){
+			if(isExit()){
 				return;
 			}
 
@@ -72,16 +75,79 @@ public class ConsoleInterface {
 				continue;
 			}
 			//TODO check if name is valid, without digits and other symbols
-			//TODO check if user with entered name already exists
 			break;
 		}
 		String nameSurname =  input;
+		//TODO
+		String email="";
+		String password="";
+
+		if(Student.register(nameSurname, email, password)) {
+			System.out.println("You have successfully registered. Please login with your name and password");
+		}else {
+			System.out.println("Registration failed");
+		}
+	}
+
+	private static void teacherLogin() throws IOException{
+
+		System.out.println("Teacher login. Enter number 1 to exit login");
+
+
+		System.out.println("Enter email:");
+		input = bufferedReader.readLine();
+		if(isExit()){
+			return;
+		}
+		String email =  input;
+
+
+		System.out.println("Enter password:");
+		input = bufferedReader.readLine();
+		if(isExit()){
+			return;
+		}
+		String password = input;
+		Teacher teacher = new Teacher(email,password);
+
+		if(teacher.login()) {
+			System.out.println("You have successfully logged.");
+			TeacherLogin.teacherMenu();
+		}else {
+			System.out.println("Login failed");
+		}
+	}
+
+
+	private static void teacherRegistration() throws IOException{
+
+		System.out.println("Teacher registration. Enter number 1 to exit registration");
+
+		while(true) {
+			System.out.println("Enter email:");
+			input = bufferedReader.readLine();
+
+			if(isExit()){
+				return;
+			}
+
+			Pattern p = Pattern.compile("^.+@.+\\..+$");
+			Matcher m = p.matcher(input);
+
+			if(!m.matches()){
+				System.out.println("Please, enter valid email");
+				continue;
+			}
+			//TODO check if user with entered email already exists
+			break;
+		}
+		String email =  input;
 
 		while(true) {
 			System.out.println("Enter password:");
 			input = bufferedReader.readLine();
 
-			if(isExit(input)){
+			if(isExit()){
 				return;
 			}
 
@@ -94,14 +160,14 @@ public class ConsoleInterface {
 
 		String password =  input;
 
-		if(Teacher.register(nameSurname, password)) {
+		if(Teacher.register(email, password)) {
 			System.out.println("You have successfully registered. Please login with your name and password");
 		}else {
 			System.out.println("Registration failed");
 		}
 	}
 
-	private static boolean isExit(String input) {
+	private static boolean isExit() {
 		try{
 			if (Integer.parseInt(input) == 1) {
 				return true;
@@ -112,43 +178,4 @@ public class ConsoleInterface {
 		return false;
 	}
 
-	private static void teacherMenu(){
-
-		while(true){
-			System.out.println("Choose command: \n"+
-					"1 - Create test template \n" +
-					"2 - Import test template from file \n" +
-					"3 - Create test for group \n" +
-					"4 - See student test results \n" +
-					"5 - Export student test results \n" +
-					"6 - Return to previous menu");
-
-			try {
-				int command = Integer.parseInt(bufferedReader.readLine());
-				switch (command) {
-					case 1:
-
-						break;
-					case 2:
-
-						break;
-					case 3:
-
-						break;
-					case 4:
-
-						break;
-					case 5:
-						System.exit(0);
-					default:
-						System.out.println("You entered wrong command number, please try again");
-				}
-			}catch (IOException e){
-				e.printStackTrace();
-			}
-			catch (NumberFormatException e){
-				System.out.println("Input is not a command number, please try again");
-			}
-		}
-	}
 }
