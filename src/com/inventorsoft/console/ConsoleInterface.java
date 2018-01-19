@@ -138,7 +138,11 @@ public class ConsoleInterface {
 				System.out.println("Please, enter valid email");
 				continue;
 			}
-			//TODO check if user with entered email already exists
+
+			if(Teacher.existEmail(input)){
+				System.out.println("Teacher with entered email already exists");
+				continue;
+			}
 			break;
 		}
 		String email =  input;

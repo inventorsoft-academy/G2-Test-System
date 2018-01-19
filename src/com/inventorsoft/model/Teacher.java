@@ -12,8 +12,8 @@ public class Teacher {
 	private static String teachersData = "src/com/inventorsoft/files/teachers.txt";
 	private String email;
 	private String password;
-	private List<String> emails;
-	private List<String> passwords;
+	private static List<String> emails;
+	private static List<String> passwords;
 
 	public Teacher(String email, String password) {
 		this.email = email;
@@ -21,7 +21,7 @@ public class Teacher {
 		readData();
 	}
 
-	private void readData() {
+	private static void readData() {
 		emails = new ArrayList<String>();
 		passwords = new ArrayList<String>();
 		File file = new File(teachersData);
@@ -49,6 +49,11 @@ public class Teacher {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public static boolean existEmail(String email){
+		readData();
+		return emails.contains(email);
 	}
 
 	public static boolean register(String email, String password){
