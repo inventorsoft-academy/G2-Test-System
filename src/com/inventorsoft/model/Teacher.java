@@ -78,12 +78,12 @@ public class Teacher {
 
 
 	public boolean login(){
-
-		if(!emails.contains(email)){
+		int index = emails.indexOf(email);
+		if(index < 0){
 			System.out.println("There is no user with such email");
 			return false;
 		}
-		if(!passwords.contains(password)){
+		if(!password.equals(passwords.get(index))){
 			System.out.println("Password is not correct");
 			return false;
 		}
