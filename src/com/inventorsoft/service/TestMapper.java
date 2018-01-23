@@ -63,32 +63,4 @@ public class TestMapper {
 		readQuestionsFromFile(fileName);
 		return createTest();
 	}
-
-	public boolean setTest(Test test){
-		File file = new File("src/com/inventorsoft/tests/"+test.getName()+".txt");
-		BufferedWriter out = null;
-		try
-		{
-			FileWriter fstream = new FileWriter(file, true);
-			out = new BufferedWriter(fstream);
-			for(Question q : test.getQuestions()){
-				out.write(q.toString());
-			}
-		}
-		catch (IOException e)
-		{
-			System.err.println("Error: " + e.getMessage());
-		}
-		finally
-		{
-			try{
-				if(out != null) {
-					out.close();
-				}
-			}catch(IOException e){
-				e.printStackTrace();
-			}
-		}
-		return true;
-	}
 }

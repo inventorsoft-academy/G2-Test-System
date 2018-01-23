@@ -22,7 +22,7 @@ public class Question {
 		str.append( "Question " + question + "\n");
 		for(String answer:answerVariants)
 				str.append(answer + "\n");
-		str.append("rightAnswers= " + rightAnswers+"\n");
+		str.append("rightAnswers= " + rightAnswers);
 		return str.toString();
 	}
 }
