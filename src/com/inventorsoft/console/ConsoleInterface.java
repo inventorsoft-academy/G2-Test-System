@@ -1,5 +1,6 @@
 package com.inventorsoft.console;
 
+import com.inventorsoft.model.Group;
 import com.inventorsoft.model.Student;
 import com.inventorsoft.service.StudentMapper;
 import com.inventorsoft.service.StudentService;
@@ -103,9 +104,7 @@ public class ConsoleInterface {
 				continue;
 			}
 
-			TeacherService teacherService = new TeacherService();
-
-			if(teacherService.existEmail(input)){
+			if(TeacherService.existEmail(input)){
 				System.out.println("Teacher with entered email already exists");
 				continue;
 			}
@@ -199,9 +198,7 @@ public class ConsoleInterface {
 				continue;
 			}
 
-			StudentService studentService = new StudentService();
-
-			if(studentService.existEmail(input)){
+			if(StudentService.existEmail(input)){
 				System.out.println("Student with entered email already exists");
 				continue;
 			}
@@ -244,9 +241,9 @@ public class ConsoleInterface {
 			}
 			break;
 		}
-		String group = input;
-
-		Student student = new Student(nameSurname,email,password,group);
+		Integer group = Integer.parseInt(input);
+		Group newGroup = new Group(group,"");
+		Student student = new Student(nameSurname,email,password,newGroup);
 
 		StudentMapper studentMapper = new StudentMapper();
 		studentMapper.saveStudentData(student);

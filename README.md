@@ -3,14 +3,14 @@ You need to develop Command Line application which is responsible for passing te
 
 # Brief Description
 Application is divided into two modules: student module and teacher module.
-Student module requirenments:
+Student module requirements:
   1) Registration;
   2) Login;
   3) Pass test;
   4) View own test results;
   5) Export test results;
 
-Teacher module requirenments:
+Teacher module requirements:
   1) Registration;
   2) Login;
   3) Create test templates( with questions);
