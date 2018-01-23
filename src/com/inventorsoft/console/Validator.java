@@ -36,8 +36,21 @@ public class Validator {
 		Matcher m = p.matcher(input);
 		return  m.matches();
 	}
+
 	static boolean isValidName(String input){
 		Pattern p = Pattern.compile("[A-Z][a-z]+[ ][A-Z][a-z]+");
+		Matcher m = p.matcher(input);
+		return  m.matches();
+	}
+
+	static boolean isValidTestName(String input){
+		Pattern p = Pattern.compile("(\\w+\\s*)+");
+		Matcher m = p.matcher(input);
+		return  m.matches();
+	}
+
+	static boolean isValidAnswerNumbers (String input){
+		Pattern p = Pattern.compile("[0-9,]+");
 		Matcher m = p.matcher(input);
 		return  m.matches();
 	}

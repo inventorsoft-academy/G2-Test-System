@@ -70,10 +70,7 @@ public class TeacherSession {
 				return;
 			}
 
-			Pattern p = Pattern.compile("(\\w+\\s*)+");
-			Matcher m = p.matcher(input);
-
-			if(!m.matches()){
+			if(!Validator.isValidTestName(input)){
 				System.out.println("Please, enter valid name");
 				continue;
 			}
@@ -148,11 +145,8 @@ public class TeacherSession {
 					return;
 				}
 
-				Pattern p = Pattern.compile("[a-z,]+");
-				Matcher m = p.matcher(input);
-
-				if(!m.matches()){
-					System.out.println("Please, enter valid format: a,b,c...");
+				if(!Validator.isValidAnswerNumbers(input)){
+					System.out.println("Please, enter valid format: 1,2,3...");
 					continue;
 				}
 				break;
