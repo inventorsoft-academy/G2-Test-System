@@ -68,14 +68,14 @@ public class ConsoleInterface {
 
 		System.out.println("Enter email:");
 		input = bufferedReader.readLine();
-		if(isExit()){
+		if(Validator.isExit(input)){
 			return;
 		}
 		String email =  input;
 
 		System.out.println("Enter password:");
 		input = bufferedReader.readLine();
-		if(isExit()){
+		if(Validator.isExit(input)){
 			return;
 		}
 		String password = input;
@@ -98,7 +98,7 @@ public class ConsoleInterface {
 			System.out.println("Enter email:");
 			input = bufferedReader.readLine();
 
-			if(isExit()){
+			if(Validator.isExit(input)){
 				return;
 			}
 
@@ -124,7 +124,7 @@ public class ConsoleInterface {
 			System.out.println("Enter password:");
 			input = bufferedReader.readLine();
 
-			if(isExit()){
+			if(Validator.isExit(input)){
 				return;
 			}
 
@@ -151,14 +151,14 @@ public class ConsoleInterface {
 
 		System.out.println("Enter email:");
 		input = bufferedReader.readLine();
-		if(isExit()){
+		if(Validator.isExit(input)){
 			return;
 		}
 		String email =  input;
 
 		System.out.println("Enter password:");
 		input = bufferedReader.readLine();
-		if(isExit()){
+		if(Validator.isExit(input)){
 			return;
 		}
 		String password = input;
@@ -180,7 +180,7 @@ public class ConsoleInterface {
 			System.out.println("Enter name and surname:");
 			input = bufferedReader.readLine();
 
-			if(isExit()){
+			if(Validator.isExit(input)){
 				return;
 			}
 
@@ -204,7 +204,7 @@ public class ConsoleInterface {
 			System.out.println("Enter email:");
 			input = bufferedReader.readLine();
 
-			if(isExit()){
+			if(Validator.isExit(input)){
 				return;
 			}
 
@@ -230,7 +230,7 @@ public class ConsoleInterface {
 			System.out.println("Enter password:");
 			input = bufferedReader.readLine();
 
-			if(isExit()){
+			if(Validator.isExit(input)){
 				return;
 			}
 
@@ -246,11 +246,11 @@ public class ConsoleInterface {
 			System.out.println("Enter group:");
 			input = bufferedReader.readLine();
 
-			if(isExit()){
+			if(Validator.isExit(input)){
 				return;
 			}
 
-			if(!isDigit()){
+			if(!Validator.isDigit(input)){
 				System.out.println("Group number contains invalid symbols. Please, try again");
 				continue;
 			}
@@ -275,30 +275,5 @@ public class ConsoleInterface {
 		}
 	}
 
-
-	private static boolean isExit() {
-		try{
-			if (Integer.parseInt(input) == 0) {
-				return true;
-			}
-		}catch (NumberFormatException e){
-			return false;
-		}
-		return false;
-	}
-
-	private static boolean isDigit() {
-		try{
-			Pattern p = Pattern.compile("\\d+");
-			Matcher m = p.matcher(input);
-			if(m.matches()){
-				return true;
-			}
-
-		}catch (NumberFormatException e){
-			return false;
-		}
-		return false;
-	}
 
 }
