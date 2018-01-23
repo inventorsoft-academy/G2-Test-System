@@ -1,7 +1,9 @@
 package com.inventorsoft.console;
 
 import com.inventorsoft.model.Student;
-import com.inventorsoft.model.Teacher;
+import com.inventorsoft.service.StudentMapper;
+import com.inventorsoft.service.StudentService;
+import com.inventorsoft.service.TeacherService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,7 +43,7 @@ public class ConsoleInterface {
 						teacherRegistration();
 						break;
 					case 3:
-						//studentLogin();
+						studentLogin();
 						break;
 					case 4:
 						studentRegistration();
@@ -60,39 +62,9 @@ public class ConsoleInterface {
 		}
 	}
 
-	private static void studentRegistration() throws IOException{
-
-		while(true) {
-			System.out.println("Enter name and surname:");
-			input = bufferedReader.readLine();
-
-			if(isExit()){
-				return;
-			}
-
-			if(input.length() < 3){
-				System.out.println("Please, enter your full name");
-				continue;
-			}
-			//TODO check if name is valid, without digits and other symbols
-			break;
-		}
-		String nameSurname =  input;
-		//TODO
-		String email="";
-		String password="";
-
-		if(Student.register(nameSurname, email, password)) {
-			System.out.println("You have successfully registered. Please login with your name and password");
-		}else {
-			System.out.println("Registration failed");
-		}
-	}
-
 	private static void teacherLogin() throws IOException{
 
-		System.out.println("Teacher login. Enter number 1 to exit login");
-
+		System.out.println("Teacher login. Enter number 0 to exit login");
 
 		System.out.println("Enter email:");
 		input = bufferedReader.readLine();
@@ -101,27 +73,26 @@ public class ConsoleInterface {
 		}
 		String email =  input;
 
-
 		System.out.println("Enter password:");
 		input = bufferedReader.readLine();
 		if(isExit()){
 			return;
 		}
 		String password = input;
-		Teacher teacher = new Teacher(email,password);
 
-		if(teacher.login()) {
+		TeacherService teacherService = new TeacherService(email,password);
+
+		if(teacherService.login()) {
 			System.out.println("You have successfully logged.");
-			TeacherLogin.teacherMenu();
+			TeacherSession.generalMenu();
 		}else {
 			System.out.println("Login failed");
 		}
 	}
 
-
 	private static void teacherRegistration() throws IOException{
 
-		System.out.println("Teacher registration. Enter number 1 to exit registration");
+		System.out.println("Teacher registration. Enter number 0 to exit registration");
 
 		while(true) {
 			System.out.println("Enter email:");
@@ -139,7 +110,9 @@ public class ConsoleInterface {
 				continue;
 			}
 
-			if(Teacher.existEmail(input)){
+			TeacherService teacherService = new TeacherService();
+
+			if(teacherService.existEmail(input)){
 				System.out.println("Teacher with entered email already exists");
 				continue;
 			}
@@ -164,18 +137,164 @@ public class ConsoleInterface {
 
 		String password =  input;
 
-		if(Teacher.register(email, password)) {
+		TeacherService teacherService = new TeacherService(email, password);
+
+		if(teacherService.register()) {
 			System.out.println("You have successfully registered. Please login with your name and password");
 		}else {
 			System.out.println("Registration failed");
 		}
 	}
 
+	private static void studentLogin()throws IOException {
+		System.out.println("Student login. Enter number 0 to exit login");
+
+		System.out.println("Enter email:");
+		input = bufferedReader.readLine();
+		if(isExit()){
+			return;
+		}
+		String email =  input;
+
+		System.out.println("Enter password:");
+		input = bufferedReader.readLine();
+		if(isExit()){
+			return;
+		}
+		String password = input;
+
+		StudentService studentService = new StudentService(email,password);
+
+		if(studentService.login()) {
+			System.out.println("You have successfully logged.");
+			//Student Menu
+		}else {
+			System.out.println("Login failed");
+		}
+	}
+
+	private static void studentRegistration() throws IOException{
+
+		System.out.println("Student registration. Enter number 0 to exit registration");
+		while(true) {
+			System.out.println("Enter name and surname:");
+			input = bufferedReader.readLine();
+
+			if(isExit()){
+				return;
+			}
+
+			if(input.length() < 3){
+				System.out.println("Please, enter your full name");
+				continue;
+			}
+
+			Pattern p = Pattern.compile("[A-Z][a-z]+[ ][A-Z][a-z]+");
+			Matcher m = p.matcher(input);
+
+			if(!m.matches()){
+				System.out.println("Please, enter valid name and surname");
+				continue;
+			}
+			break;
+		}
+		String nameSurname =  input;
+
+		while(true) {
+			System.out.println("Enter email:");
+			input = bufferedReader.readLine();
+
+			if(isExit()){
+				return;
+			}
+
+			Pattern p = Pattern.compile("^.+@.+\\..+$");
+			Matcher m = p.matcher(input);
+
+			if(!m.matches()){
+				System.out.println("Please, enter valid email");
+				continue;
+			}
+
+			StudentService studentService = new StudentService();
+
+			if(studentService.existEmail(input)){
+				System.out.println("Student with entered email already exists");
+				continue;
+			}
+			break;
+		}
+		String email =  input;
+
+		while(true) {
+			System.out.println("Enter password:");
+			input = bufferedReader.readLine();
+
+			if(isExit()){
+				return;
+			}
+
+			if(input.length() < 3){
+				System.out.println("Password is too short. Please, try again");
+				continue;
+			}
+			break;
+		}
+		String password =  input;
+
+		while(true) {
+			System.out.println("Enter group:");
+			input = bufferedReader.readLine();
+
+			if(isExit()){
+				return;
+			}
+
+			if(!isDigit()){
+				System.out.println("Group number contains invalid symbols. Please, try again");
+				continue;
+			}
+
+			if(input.length() < 3){
+				System.out.println("Group number is too short. Please, try again");
+				continue;
+			}
+			break;
+		}
+		String group = input;
+
+		Student student = new Student(nameSurname,email,password,group);
+
+		StudentService studentService = new StudentService(email, password);
+		StudentMapper studentMapper = new StudentMapper();
+		studentMapper.saveStudentData(student);
+		if(studentService.register()) {
+			System.out.println("You have successfully registered. Please login with your name and password");
+		}else {
+			System.out.println("Registration failed");
+		}
+	}
+
+
 	private static boolean isExit() {
 		try{
-			if (Integer.parseInt(input) == 1) {
+			if (Integer.parseInt(input) == 0) {
 				return true;
 			}
+		}catch (NumberFormatException e){
+			return false;
+		}
+		return false;
+	}
+
+	private static boolean isDigit() {
+		try{
+			Pattern p = Pattern.compile("\\d+");
+			Matcher m = p.matcher(input);
+			if(m.matches()){
+				return true;
+			}
+
 		}catch (NumberFormatException e){
 			return false;
 		}
