@@ -8,8 +8,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class TeacherSession {
 
@@ -158,7 +156,7 @@ public class TeacherSession {
 
 		Test test = new Test(name,questions);
 		TestMapper testMapper = new TestMapper();
-		if(testMapper.setTest(test)) {
+		if(testMapper.saveTest(test)) {
 			System.out.println("You have successfully created new test. ");
 		}else {
 			System.out.println("Saving to file failed");
