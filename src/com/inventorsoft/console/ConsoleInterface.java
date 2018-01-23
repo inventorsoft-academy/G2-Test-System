@@ -102,10 +102,7 @@ public class ConsoleInterface {
 				return;
 			}
 
-			Pattern p = Pattern.compile("^.+@.+\\..+$");
-			Matcher m = p.matcher(input);
-
-			if(!m.matches()){
+			if(!Validator.isValidEmail(input)){
 				System.out.println("Please, enter valid email");
 				continue;
 			}
@@ -189,10 +186,7 @@ public class ConsoleInterface {
 				continue;
 			}
 
-			Pattern p = Pattern.compile("[A-Z][a-z]+[ ][A-Z][a-z]+");
-			Matcher m = p.matcher(input);
-
-			if(!m.matches()){
+			if(!Validator.isValidName(input)){
 				System.out.println("Please, enter valid name and surname");
 				continue;
 			}
@@ -208,10 +202,7 @@ public class ConsoleInterface {
 				return;
 			}
 
-			Pattern p = Pattern.compile("^.+@.+\\..+$");
-			Matcher m = p.matcher(input);
-
-			if(!m.matches()){
+			if(!Validator.isValidEmail(input)){
 				System.out.println("Please, enter valid email");
 				continue;
 			}

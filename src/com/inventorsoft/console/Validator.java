@@ -30,4 +30,15 @@ public class Validator {
 		}
 		return false;
 	}
+
+	static boolean isValidEmail(String input){
+		Pattern p = Pattern.compile("^.+@.+\\..+$");
+		Matcher m = p.matcher(input);
+		return  m.matches();
+	}
+	static boolean isValidName(String input){
+		Pattern p = Pattern.compile("[A-Z][a-z]+[ ][A-Z][a-z]+");
+		Matcher m = p.matcher(input);
+		return  m.matches();
+	}
 }
