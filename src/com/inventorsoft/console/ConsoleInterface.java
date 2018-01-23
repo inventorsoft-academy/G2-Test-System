@@ -8,8 +8,6 @@ import com.inventorsoft.service.TeacherService;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by Nina on 11.01.2018.
@@ -80,9 +78,7 @@ public class ConsoleInterface {
 		}
 		String password = input;
 
-		TeacherService teacherService = new TeacherService(email,password);
-
-		if(teacherService.login()) {
+		if(TeacherService.login(email, password)) {
 			System.out.println("You have successfully logged.");
 			TeacherSession.generalMenu();
 		}else {
@@ -134,9 +130,7 @@ public class ConsoleInterface {
 
 		String password =  input;
 
-		TeacherService teacherService = new TeacherService(email, password);
-
-		if(teacherService.register()) {
+		if(TeacherService.register(email, password)) {
 			System.out.println("You have successfully registered. Please login with your name and password");
 		}else {
 			System.out.println("Registration failed");
@@ -160,9 +154,7 @@ public class ConsoleInterface {
 		}
 		String password = input;
 
-		StudentService studentService = new StudentService(email,password);
-
-		if(studentService.login()) {
+		if(StudentService.login(email,password)) {
 			System.out.println("You have successfully logged.");
 			//Student Menu
 		}else {
@@ -256,10 +248,9 @@ public class ConsoleInterface {
 
 		Student student = new Student(nameSurname,email,password,group);
 
-		StudentService studentService = new StudentService(email, password);
 		StudentMapper studentMapper = new StudentMapper();
 		studentMapper.saveStudentData(student);
-		if(studentService.register()) {
+		if(StudentService.register(email,password)) {
 			System.out.println("You have successfully registered. Please login with your name and password");
 		}else {
 			System.out.println("Registration failed");

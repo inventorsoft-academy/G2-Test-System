@@ -5,28 +5,19 @@ package com.inventorsoft.service;
  */
 public class TeacherService {
 
-	private static String teachersData = "src/com/inventorsoft/loginfiles/teachers.txt";
-	private String email;
-	private String password;
-	private AuthorisationService service = new AuthorisationService(teachersData);
+	private static final String TEACHERS_DATA_FILE = "src/com/inventorsoft/loginfiles/teachers.txt";
 
-	public TeacherService() {
-	}
+	private static AuthorisationService service = new AuthorisationService(TEACHERS_DATA_FILE);
 
-	public TeacherService(String email, String password) {
-		this.email = email;
-		this.password = password;
-	}
-
-	public boolean existEmail(String email){
+	public static boolean existEmail(String email){
 		return service.existEmail(email);
 	}
 
-	public boolean register(){
+	public static boolean register(String email,String password){
 		return service.register(email, password);
 	}
 
-	public boolean login(){
+	public static boolean login(String email,String password){
 		return service.login(email, password);
 	}
 }

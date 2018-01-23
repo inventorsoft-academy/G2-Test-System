@@ -75,6 +75,7 @@ public class AuthorisationService {
 	}
 
 	public boolean login( String email, String password){
+		readData(dataFile);
 		int index = emails.indexOf(email);
 		if(index < 0){
 			System.out.println("There is no user with such email");
