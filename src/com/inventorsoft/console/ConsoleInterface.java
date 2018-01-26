@@ -48,12 +48,19 @@ public class ConsoleInterface {
 						studentRegistration();
 						break;
 					case 5:
-						System.exit(0);
+						try {
+							bufferedReader.close();
+							System.exit(0);
+						}catch (IOException e){
+							e.printStackTrace();
+							System.exit(0);
+						}
 					default:
 						System.out.println("You entered wrong command number, please try again");
 				}
 			}catch (IOException e){
-				e.printStackTrace();
+				e.printStackTrace(); // log
+				System.exit(0);
 			}
 			catch (NumberFormatException e){
 				System.out.println("Input is not a command number, please try again");
@@ -245,8 +252,11 @@ public class ConsoleInterface {
 		Group newGroup = new Group(group,"");
 		Student student = new Student(nameSurname,email,password,newGroup);
 
-		StudentMapper studentMapper = new StudentMapper();
-		studentMapper.saveStudentData(student);
+		if(StudentMapper.saveStudentData(student)){
+			System.out.println("Your account data saved");
+		}else{
+			System.out.println("Failed to save account data");
+		}
 		if(StudentService.register(email,password)) {
 			System.out.println("You have successfully registered. Please login with your name and password");
 		}else {
