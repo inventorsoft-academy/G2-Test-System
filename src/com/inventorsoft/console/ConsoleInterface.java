@@ -1,10 +1,9 @@
 package com.inventorsoft.console;
 
-import com.inventorsoft.model.Group;
 import com.inventorsoft.model.Student;
-import com.inventorsoft.service.StudentMapper;
 import com.inventorsoft.service.StudentService;
 import com.inventorsoft.service.TeacherService;
+import com.inventorsoft.session.StudentSession;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -63,6 +62,7 @@ public class ConsoleInterface {
 				System.exit(0);
 			}
 			catch (NumberFormatException e){
+				e.printStackTrace();
 				System.out.println("Input is not a command number, please try again");
 			}
 		}
@@ -88,7 +88,7 @@ public class ConsoleInterface {
 
 		if(TeacherService.login(email, password)) {
 			System.out.println("You have successfully logged.");
-			TeacherSession.generalMenu();
+			TeacherInterface.generalMenu();
 		}else {
 			System.out.println("Login failed");
 		}
@@ -97,6 +97,27 @@ public class ConsoleInterface {
 	private static void teacherRegistration() throws IOException{
 
 		System.out.println("Teacher registration. Enter number 0 to exit registration");
+
+		while(true) {
+			System.out.println("Enter name, surname, and patronymic:");
+			input = bufferedReader.readLine();
+
+			if(Validator.isExit(input)){
+				return;
+			}
+
+			if(input.length() < 3){
+				System.out.println("Please, enter your full name");
+				continue;
+			}
+
+//			if(!Validator.isValidFullName(input)){
+//				System.out.println("Please, enter valid name and surname");
+//				continue;
+//			}
+			break;
+		}
+		String nameSurname =  input;
 
 		while(true) {
 			System.out.println("Enter email:");
@@ -161,8 +182,11 @@ public class ConsoleInterface {
 		String password = input;
 
 		if(StudentService.login(email,password)) {
-			System.out.println("You have successfully logged.");
-			//Student Menu
+		StudentSession ss = new StudentSession();
+			ss.initialize(email);
+			System.out.println("Welcome, " + ss.getStudentName() + " !");
+			System.out.println("You have successfully logged as student");
+			StudentInterface.generalMenu(ss);
 		}else {
 			System.out.println("Login failed");
 		}
@@ -249,10 +273,9 @@ public class ConsoleInterface {
 			break;
 		}
 		Integer group = Integer.parseInt(input);
-		Group newGroup = new Group(group,"");
-		Student student = new Student(nameSurname,email,password,newGroup);
+		Student student = new Student(nameSurname,email,password,group);
 
-		if(StudentMapper.saveStudentData(student)){
+		if(student.save()){
 			System.out.println("Your account data saved");
 		}else{
 			System.out.println("Failed to save account data");

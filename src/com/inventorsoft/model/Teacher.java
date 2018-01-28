@@ -1,10 +1,12 @@
 package com.inventorsoft.model;
 
 public class Teacher {
+	private String fullName;
 	private String email;
 	private String password;
 
-	public Teacher(String email, String password) {
+	public Teacher(String fullName, String email, String password) {
+		this.fullName = fullName;
 		this.email = email;
 		this.password = password;
 	}
@@ -12,7 +14,8 @@ public class Teacher {
 	@Override
 	public String toString() {
 		return "Teacher{" +
-				"email='" + email + '\'' +
+				"fullName='" + fullName + '\'' +
+				", email='" + email + '\'' +
 				", password='" + password + '\'' +
 				'}';
 	}

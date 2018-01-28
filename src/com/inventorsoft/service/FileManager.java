@@ -2,7 +2,6 @@ package com.inventorsoft.service;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class FileManager {
 	public static boolean writeTo( String fileName, String text){
@@ -33,8 +32,8 @@ public class FileManager {
 
 	//public static String readLine(String fileName){}
 
-	public static List<String> readLines(String fileName){
-		List<String> list = new ArrayList<>();
+	public static ArrayList<String> readLines(String fileName){
+		ArrayList<String> list = new ArrayList<>();
 		BufferedReader in = null;
 		try {
 			in = new BufferedReader(new FileReader(fileName));
