@@ -14,8 +14,9 @@ public class CompletedTest extends Test{
 		this.mark = mark;
 	}
 
-	public CompletedTest(String name, ArrayList<Question> questions, ArrayList<String> answers, float mark) {
-		super(name, questions);
+	public CompletedTest(String name, ArrayList<Question> questions, ArrayList<String> rightAnswers,
+	                     ArrayList<String> answers, float mark) {
+		super(name, questions,rightAnswers);
 		this.answers = answers;
 		this.mark = mark;
 	}

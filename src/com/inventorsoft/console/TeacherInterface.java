@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class TeacherSession {
+public class TeacherInterface {
 
 	private static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 	private static String input;
@@ -94,7 +94,8 @@ public class TeacherSession {
 			break;
 		}
 
-		ArrayList<Question> questions = new ArrayList<Question>();
+		ArrayList<Question> questions = new ArrayList<>();
+		ArrayList<String> answers = new ArrayList<>();
 		for(int i=0;i<count;i++){
 
 			System.out.println("Enter text of question "+(i+1));
@@ -123,7 +124,7 @@ public class TeacherSession {
 				break;
 			}
 
-			ArrayList<String> answerVariants = new ArrayList<String>();
+			ArrayList<String> answerVariants = new ArrayList<>();
 			for(int j=0;j<countQ;j++) {
 
 				System.out.println("Enter variant "+(j+1));
@@ -150,20 +151,21 @@ public class TeacherSession {
 				break;
 			}
 			String rightAnswers =  input;
-			Question newQuestion = new Question(questionText,answerVariants,rightAnswers);
+			Question newQuestion = new Question(questionText,answerVariants);
 			questions.add(newQuestion);
+			answers.add(rightAnswers);
 		}
 
-		Test test = new Test(name,questions);
-		TestMapper testMapper = new TestMapper();
-		if(testMapper.saveTest(test)) {
+		Test test = new Test(name,questions,answers);
+
+		if(test.save()) {
 			System.out.println("You have successfully created new test. ");
 		}else {
 			System.out.println("Saving to file failed");
 		}
 	}
 	public static void main(String ... args){
-		TeacherSession.generalMenu();
+		TeacherInterface.generalMenu();
 	}
 
 }

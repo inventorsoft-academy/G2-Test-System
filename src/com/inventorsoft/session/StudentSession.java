@@ -36,7 +36,7 @@ public class StudentSession {
 	 * unfinished
 	 * @param test
 	 */
-	public void passTest(Test test){
+	/*public void passTest(Test test){
 		ArrayList<String> answers = test.pass();
 		int mark = 0;
 		ArrayList<String> rightAns = test.getRightAnswers();
@@ -47,7 +47,7 @@ public class StudentSession {
 		}
 		CompletedTest completedTest = new CompletedTest(answers,mark);
 		//add this test to student`s tests
-	}
+	}*/
 
 }
 

@@ -8,21 +8,18 @@ import java.util.ArrayList;
 public class Question {
 	private String question;
 	private ArrayList<String> answerVariants;
-	private String rightAnswers;
 
-	public Question(String question, ArrayList<String> answers, String rightAnswer) {
+	public Question(String question, ArrayList<String> answers) {
 		this.question = question;
 		this.answerVariants = answers;
-		this.rightAnswers = rightAnswer;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-		str.append( "Question " + question + "\n");
-		for(String answer:answerVariants)
-				str.append(answer + "\n");
-		str.append("rightAnswers= " + rightAnswers+"\n");
+		str.append( question + "\n");
+		for(String answer : answerVariants)
+				str.append( answer + "\n");
 		return str.toString();
 	}
 }

@@ -1,5 +1,6 @@
 package com.inventorsoft.console;
 
+import com.inventorsoft.model.Test;
 import com.inventorsoft.session.StudentSession;
 
 import java.io.BufferedReader;
@@ -68,6 +69,7 @@ public class StudentInterface {
 			}
 
 			passTest(list.get(index-1));
+			return;
 		}
 	}
 
@@ -76,6 +78,7 @@ public class StudentInterface {
 	 * @param testName
 	 */
 	private static void passTest(String testName){
-
+		Test test = Test.getBy(testName);
+		System.out.println(test);
 	}
 }

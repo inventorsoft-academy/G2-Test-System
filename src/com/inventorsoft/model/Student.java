@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  * Created by Nina on 14.01.2018.
  */
 public class Student {
-	private static String studentData = "src/com/inventorsoft/objects/students.txt";
+	private static String STUDENT_DATA = "src/com/inventorsoft/objects/students.txt";
 
 	private int id; //create autoincrement
 	private String nameSurname;
@@ -84,7 +84,7 @@ public class Student {
 	public boolean save(){
 		StudentMapper sm = new StudentMapper();
 		String data = sm.format(this);
-		FileManager.writeTo(studentData, data);
+		FileManager.writeTo(STUDENT_DATA, data);
 		return true;
 	}
 
@@ -94,7 +94,7 @@ public class Student {
 	 * @return student object
 	 */
 	public static Student getBy(String email){
-		ArrayList<String> lines = FileManager.readLines(studentData);
+		ArrayList<String> lines = FileManager.readLines(STUDENT_DATA);
 		String found = "";
 		//find student by email
 		for (String line : lines) {
