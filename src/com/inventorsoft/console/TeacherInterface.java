@@ -2,7 +2,6 @@ package com.inventorsoft.console;
 
 import com.inventorsoft.model.Question;
 import com.inventorsoft.model.Test;
-import com.inventorsoft.service.TestMapper;
 
 import java.io.BufferedReader;
 import java.io.IOException;

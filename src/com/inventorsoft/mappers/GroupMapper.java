@@ -1,4 +1,4 @@
-package com.inventorsoft.service;
+package com.inventorsoft.mappers;
 
 import com.inventorsoft.model.Group;
 

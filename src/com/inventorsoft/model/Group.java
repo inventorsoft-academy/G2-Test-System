@@ -1,7 +1,7 @@
 package com.inventorsoft.model;
 
 import com.inventorsoft.service.FileManager;
-import com.inventorsoft.service.GroupMapper;
+import com.inventorsoft.mappers.GroupMapper;
 
 import java.util.ArrayList;
 import java.util.List;

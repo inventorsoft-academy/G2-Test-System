@@ -1,7 +1,7 @@
 package com.inventorsoft.model;
 
 import com.inventorsoft.service.FileManager;
-import com.inventorsoft.service.TestMapper;
+import com.inventorsoft.mappers.TestMapper;
 
 import java.util.ArrayList;
 

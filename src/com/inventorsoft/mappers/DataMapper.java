@@ -1,4 +1,4 @@
-package com.inventorsoft.service;
+package com.inventorsoft.mappers;
 
 public interface DataMapper <T> {
 

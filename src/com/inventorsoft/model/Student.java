@@ -1,7 +1,7 @@
 package com.inventorsoft.model;
 
 import com.inventorsoft.service.FileManager;
-import com.inventorsoft.service.StudentMapper;
+import com.inventorsoft.mappers.StudentMapper;
 
 import java.util.ArrayList;
 import java.util.List;
