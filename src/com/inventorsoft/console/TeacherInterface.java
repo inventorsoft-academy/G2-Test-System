@@ -67,7 +67,7 @@ public class TeacherInterface {
 				return;
 			}
 
-			if(!Validator.isValidTestName(input)){
+			if(!Validator.isTestName(input)){
 				System.out.println("Please, enter valid name");
 				continue;
 			}

@@ -111,10 +111,10 @@ public class ConsoleInterface {
 				continue;
 			}
 
-//			if(!Validator.isValidFullName(input)){
-//				System.out.println("Please, enter valid name and surname");
-//				continue;
-//			}
+			if(!Validator.isFullName(input)){
+				System.out.println("Please, enter valid name and surname");
+				continue;
+			}
 			break;
 		}
 		String nameSurname =  input;
@@ -208,7 +208,7 @@ public class ConsoleInterface {
 				continue;
 			}
 
-			if(!Validator.isValidName(input)){
+			if(!Validator.isName(input)){
 				System.out.println("Please, enter valid name and surname");
 				continue;
 			}
