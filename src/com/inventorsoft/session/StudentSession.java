@@ -32,22 +32,18 @@ public class StudentSession {
 		return student.getTests();
 	}
 
-	/**
-	 * unfinished
-	 * @param test
-	 */
-	/*public void passTest(Test test){
-		ArrayList<String> answers = test.pass();
+	public CompletedTest pass(Test test, ArrayList<String> answers){
 		int mark = 0;
 		ArrayList<String> rightAns = test.getRightAnswers();
-		for (int i=0;i<rightAns.size();i++) {
+		for (int i=0; i < rightAns.size(); i++) {
 			if(rightAns.get(i).equals(answers.get(i))){
 				mark += 1;
 			}
 		}
-		CompletedTest completedTest = new CompletedTest(answers,mark);
-		//add this test to student`s tests
-	}*/
+		CompletedTest completedTest = new CompletedTest(test,answers,mark);
+		student.addCompletedTest(completedTest.getName());
+		return completedTest;
+	}
 
 }
 

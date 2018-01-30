@@ -34,6 +34,12 @@ public class Test {
 	public Test() {
 	}
 
+	public Test(Test test){
+		this.name = test.getName();
+		this.questions = test.getQuestions();
+		this.rightAnswers = test.getRightAnswers();
+	}
+
 	public Test(String name, ArrayList<Question> questions, ArrayList<String> rightAnswers) {
 		this.name = name;
 		this.questions = questions;
@@ -54,8 +60,6 @@ public class Test {
 		test.setName(name);
 		return test;
 	}
-
-	//public ArrayList<String> pass(){}
 
 	@Override
 	public String toString() {

@@ -144,7 +144,7 @@ public class TeacherInterface {
 					return;
 				}
 
-				if(!Validator.isValidAnswerNumbers(input)){
+				if(!Validator.isAnswer(input)){
 					System.out.println("Please, enter valid format: 1,2,3...");
 					continue;
 				}

@@ -1,11 +1,14 @@
 package com.inventorsoft.console;
 
+import com.inventorsoft.model.CompletedTest;
+import com.inventorsoft.model.Question;
 import com.inventorsoft.model.Test;
 import com.inventorsoft.session.StudentSession;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentInterface {
@@ -74,11 +77,37 @@ public class StudentInterface {
 	}
 
 	/**
-	 * unfinished
-	 * @param testName
+	 * student passes the test with given name
+	 * in the end they can compare their answers and correct answers
+	 * and see mark (count of correctly  answered questions)
 	 */
-	private static void passTest(String testName){
+	private static void passTest(String testName)throws IOException{
 		Test test = Test.getBy(testName);
-		System.out.println(test);
+		ArrayList<String> answers = new ArrayList<>(test.getQuestions().size());
+
+		System.out.println("Test: " + testName);
+		ArrayList<Question> questions = test.getQuestions();
+		for (Question question : questions){
+			System.out.print(question);
+			while(true){
+				input = bufferedReader.readLine();
+				if(!Validator.isAnswer(input)) {
+					System.err.println("Your input is not correct, please, try again. (Input should be like '1' or '1,2,3')");
+					continue;
+				}
+				break;
+			}
+			answers.add(input.trim());
+		}
+
+		System.out.println("Test finished.");
+		CompletedTest res = session.pass(test,answers);
+		ArrayList<String> rightAns = test.getRightAnswers();
+		for (int i=0; i < rightAns.size(); i++) {
+			System.out.println("Question " + (i + 1));
+			System.out.println("right answer: " + rightAns.get(i));
+			System.out.println("your answer: " + answers.get(i));
+		}
+		System.out.println("Your mark is: " + res.getMark() );
 	}
 }

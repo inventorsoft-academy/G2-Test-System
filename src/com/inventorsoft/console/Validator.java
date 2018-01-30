@@ -31,7 +31,11 @@ public class Validator {
 		return false;
 	}
 
-	static boolean isValidEmail(String input){
+	/**
+	 * @param input email address
+	 * @return true if it is like "emailname@gmail.com"
+	 */
+	static boolean isEmail(String input){
 		Pattern p = Pattern.compile("^.+@.+\\..+$");
 		Matcher m = p.matcher(input);
 		return  m.matches();
@@ -49,9 +53,21 @@ public class Validator {
 		return  m.matches();
 	}
 
-	static boolean isValidAnswerNumbers (String input){
-		Pattern p = Pattern.compile("[0-9,]+");
-		Matcher m = p.matcher(input);
-		return  m.matches();
+	/**
+	 * @param input test question answer
+	 * @return true if it is like "1" or "1,2,3"
+	 */
+	static boolean isAnswer(String input) {
+		try{
+			Pattern p = Pattern.compile("(\\d(,)*)+");
+			Matcher m = p.matcher(input);
+			if(m.matches()){
+				return true;
+			}
+
+		}catch (NumberFormatException e){
+			return false;
+		}
+		return false;
 	}
 }

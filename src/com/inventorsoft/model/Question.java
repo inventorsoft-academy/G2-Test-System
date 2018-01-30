@@ -14,6 +14,9 @@ public class Question {
 		this.answerVariants = answers;
 	}
 
+	/**
+	 * @return question and its variants
+	 */
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();

@@ -69,12 +69,8 @@ public class Student {
 		return tests;
 	}
 
-	public void setGroup(Integer group) {
-		this.group = group;
-	}
-
-	public void setTests(ArrayList<String> tests) {
-		this.tests = tests;
+	public void addCompletedTest(String test){
+		this.tests.add(test);
 	}
 
 	/**

@@ -9,7 +9,8 @@ public class CompletedTest extends Test{
 	private ArrayList<String> answers;
 	private float mark;
 
-	public CompletedTest(ArrayList<String> answers, float mark) {
+	public CompletedTest(Test test, ArrayList<String> answers, float mark) {
+		super(test);
 		this.answers = answers;
 		this.mark = mark;
 	}
@@ -19,6 +20,14 @@ public class CompletedTest extends Test{
 		super(name, questions,rightAnswers);
 		this.answers = answers;
 		this.mark = mark;
+	}
+
+	public ArrayList<String> getAnswers() {
+		return answers;
+	}
+
+	public float getMark() {
+		return mark;
 	}
 
 	@Override

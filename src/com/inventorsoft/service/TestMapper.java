@@ -39,7 +39,7 @@ public class TestMapper implements DataMapper<Test> {
 			String lineWithAnswers = lines[lines.length-1];
 			int index = lineWithAnswers.indexOf(":");
 			String answers = lineWithAnswers.substring(index+1);
-			answersList.add(answers);
+			answersList.add(answers.trim());
 			Question q = new Question(lines[0],variants);
 			questionsList.add(q);
 		}

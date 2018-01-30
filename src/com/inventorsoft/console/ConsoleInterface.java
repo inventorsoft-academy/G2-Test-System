@@ -127,7 +127,7 @@ public class ConsoleInterface {
 				return;
 			}
 
-			if(!Validator.isValidEmail(input)){
+			if(!Validator.isEmail(input)){
 				System.out.println("Please, enter valid email");
 				continue;
 			}
@@ -224,7 +224,7 @@ public class ConsoleInterface {
 				return;
 			}
 
-			if(!Validator.isValidEmail(input)){
+			if(!Validator.isEmail(input)){
 				System.out.println("Please, enter valid email");
 				continue;
 			}
