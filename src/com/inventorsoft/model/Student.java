@@ -1,18 +1,12 @@
 package com.inventorsoft.model;
 
-import com.inventorsoft.service.FileManager;
-import com.inventorsoft.mappers.StudentMapper;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by Nina on 14.01.2018.
  */
 public class Student {
-	private static String STUDENT_DATA = "src/com/inventorsoft/objects/students.txt";
 
 	private int id; //create autoincrement
 	private String nameSurname;
@@ -71,38 +65,6 @@ public class Student {
 
 	public void addCompletedTest(String test){
 		this.tests.add(test);
-	}
-
-	/**
-	 * save student data to file
-	 * @return true if saved successfully
-	 */
-	public boolean save(){
-		StudentMapper sm = new StudentMapper();
-		String data = sm.format(this);
-		FileManager.writeTo(STUDENT_DATA, data);
-		return true;
-	}
-
-	/**
-	 * find student data in files and return student object
-	 * @param email of student we are looking for
-	 * @return student object
-	 */
-	public static Student getBy(String email){
-		ArrayList<String> lines = FileManager.readLines(STUDENT_DATA);
-		String found = "";
-		//find student by email
-		for (String line : lines) {
-			Pattern p = Pattern.compile(".+"+email+".+");
-			Matcher m = p.matcher(line);
-			if(m.matches()){
-				found = line;
-			}
-		}
-		StudentMapper sm = new StudentMapper();
-		Student student = sm.parse(found);
-		return student;
 	}
 
 	@Override

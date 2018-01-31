@@ -1,5 +1,6 @@
 package com.inventorsoft.console;
 
+import com.inventorsoft.controllers.StudentController;
 import com.inventorsoft.model.Student;
 import com.inventorsoft.service.StudentService;
 import com.inventorsoft.service.TeacherService;
@@ -275,7 +276,7 @@ public class ConsoleInterface {
 		Integer group = Integer.parseInt(input);
 		Student student = new Student(nameSurname,email,password,group);
 
-		if(student.save()){
+		if(StudentController.save(student)){
 			System.out.println("Your account data saved");
 		}else{
 			System.out.println("Failed to save account data");

@@ -1,5 +1,6 @@
 package com.inventorsoft.session;
 
+import com.inventorsoft.controllers.StudentController;
 import com.inventorsoft.model.CompletedTest;
 import com.inventorsoft.model.Group;
 import com.inventorsoft.model.Student;
@@ -13,7 +14,7 @@ public class StudentSession {
 	private Student student;
 
 	public void initialize(String email){
-		student = Student.getBy(email);
+		student = StudentController.getBy(email);
 	}
 
 	/** get list of test names that can be passed by this group of student
