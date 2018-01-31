@@ -12,9 +12,20 @@ import java.util.List;
 public class StudentSession {
 
 	private Student student;
+	private StudentController studentController;
 
-	public void initialize(String email){
-		student = StudentController.getBy(email);
+	public boolean start(String email){
+		studentController = new StudentController();
+		student = studentController.getBy(email);
+		if(student == null){
+			return false;
+		}
+		return true;
+	}
+
+	public void end(){
+		studentController.update(student);
+		studentController.saveAll();
 	}
 
 	/** get list of test names that can be passed by this group of student
@@ -23,6 +34,10 @@ public class StudentSession {
 	public List<String> getAvailableTests(){
 		Group group = Group.getBy(student.getGroup());
 		return group.getTests();
+	}
+
+	public List<String> getPassesTests(){
+		return student.getTests();
 	}
 
 	public String getStudentName(){

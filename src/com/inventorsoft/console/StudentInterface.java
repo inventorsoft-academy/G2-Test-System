@@ -32,12 +32,13 @@ public class StudentInterface {
 						seeAvailableTests();
 						break;
 					case 2:
-
+						seePassedTests();
 						break;
 					case 3:
 
 						break;
 					case 4:
+						ss.end();
 						return;
 					default:
 						System.out.println("You entered wrong command number, please try again");
@@ -51,6 +52,15 @@ public class StudentInterface {
 		}
 	}
 
+	private static void seePassedTests() {
+		List<String> list = session.getPassedTests();
+		System.out.println("List of passed tests: ");
+		int i = 0;
+		for (String test: list) {
+			System.out.println(++i + ". " + test);
+		}
+	}
+
 	private static void seeAvailableTests()throws IOException {
 		List<String> list = session.getAvailableTests();
 		System.out.println("List of available tests to pass: ");
@@ -61,6 +71,10 @@ public class StudentInterface {
 		while(true) {
 			System.out.println("Enter number of test you want to pass: ");
 			input = bufferedReader.readLine();
+
+			if(Validator.isExit(input)){
+				return;
+			}
 
 			if(!Validator.isDigit(input)){
 				System.out.println("Please, enter valid number");

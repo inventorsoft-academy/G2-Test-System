@@ -29,6 +29,24 @@ public class FileManager {
 		}
 	}
 
+	public static boolean rewrite(String fileName, ArrayList<String> list){
+		PrintWriter pw = null;
+		try {
+			pw = new PrintWriter(fileName);
+			for(String elem : list){
+				pw.print(elem);
+			}
+		}catch (IOException e){
+			e.printStackTrace();
+			return false;
+		}finally {
+			if (pw != null) {
+				pw.close();
+			}
+		}
+		return true;
+	}
+
 	public static <T> boolean writeListTo( String fileName, ArrayList<T> list){
 		BufferedWriter out = null;
 		try

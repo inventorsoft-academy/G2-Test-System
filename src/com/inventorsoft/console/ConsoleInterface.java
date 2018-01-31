@@ -184,7 +184,10 @@ public class ConsoleInterface {
 
 		if(StudentService.login(email,password)) {
 		StudentSession ss = new StudentSession();
-			ss.initialize(email);
+			if(!ss.start(email)){
+				System.out.println("Student not found!");
+				return;
+			}
 			System.out.println("Welcome, " + ss.getStudentName() + " !");
 			System.out.println("You have successfully logged as student");
 			StudentInterface.generalMenu(ss);
@@ -276,7 +279,7 @@ public class ConsoleInterface {
 		Integer group = Integer.parseInt(input);
 		Student student = new Student(nameSurname,email,password,group);
 
-		if(StudentController.save(student)){
+		if(StudentController.saveNew(student)){
 			System.out.println("Your account data saved");
 		}else{
 			System.out.println("Failed to save account data");

@@ -116,6 +116,11 @@ public class TeacherInterface {
 				}
 				try {
 					countQ = Integer.parseInt(input);
+
+					if(countQ < 2){
+						System.out.println("Question must have at least 2 variants");
+						continue;
+					}
 				}catch (NumberFormatException e){
 					System.out.println("Number contains invalid symbols. Please, try again");
 					continue;
