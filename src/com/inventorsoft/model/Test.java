@@ -1,15 +1,11 @@
 package com.inventorsoft.model;
 
-import com.inventorsoft.service.FileManager;
-import com.inventorsoft.mappers.TestMapper;
-
 import java.util.ArrayList;
 
 /**
  * Created by Nina on 14.01.2018.
  */
 public class Test {
-	private static String TESTS_FOLDER = "src/com/inventorsoft/tests/";
 
 	private String name;
 	private ArrayList<Question> questions;
@@ -44,21 +40,6 @@ public class Test {
 		this.name = name;
 		this.questions = questions;
 		this.rightAnswers = rightAnswers;
-	}
-
-	public boolean save(){
-		TestMapper tm = new TestMapper();
-		String data = tm.format(this);
-		FileManager.writeTo(TESTS_FOLDER + name + ".test" , data);
-		return true;
-	}
-
-	public static Test getBy(String name){
-		String testString = FileManager.readAll("src/com/inventorsoft/tests/" + name);
-		TestMapper tm = new TestMapper();
-		Test test =  tm.parse(testString);
-		test.setName(name);
-		return test;
 	}
 
 	@Override

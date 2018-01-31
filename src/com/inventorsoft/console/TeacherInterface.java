@@ -1,5 +1,6 @@
 package com.inventorsoft.console;
 
+import com.inventorsoft.controllers.TestController;
 import com.inventorsoft.model.Question;
 import com.inventorsoft.model.Test;
 
@@ -157,7 +158,7 @@ public class TeacherInterface {
 
 		Test test = new Test(name,questions,answers);
 
-		if(test.save()) {
+		if(TestController.save(test)) {
 			System.out.println("You have successfully created new test. ");
 		}else {
 			System.out.println("Saving to file failed");
