@@ -32,6 +32,7 @@ public class StudentSession {
 	 * @return list of test names
 	 */
 	public List<String> getAvailableTests(){
+		//TODO remove passed tests from list
 		Group group = Group.getBy(student.getGroup());
 		return group.getTests();
 	}

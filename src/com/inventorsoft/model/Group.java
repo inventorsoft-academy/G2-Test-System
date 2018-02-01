@@ -26,6 +26,10 @@ public class Group {
 		return tests;
 	}
 
+	public void addTest(String test){
+		tests.add(test);
+	}
+
 	public Group(Integer groupId, String specialisation, List<String> tests) {
 		this.groupId = groupId;
 		this.specialisation = specialisation;
