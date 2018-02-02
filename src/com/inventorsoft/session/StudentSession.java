@@ -28,13 +28,20 @@ public class StudentSession {
 		studentController.saveAll();
 	}
 
-	/** get list of test names that can be passed by this group of student
-	 * @return list of test names
+	/** get list of tests that can be passed by this group of student
+	 * @return list of tests' names
 	 */
 	public List<String> getAvailableTests(){
-		//TODO remove passed tests from list
 		Group group = Group.getBy(student.getGroup());
-		return group.getTests();
+		List<String> tests = group.getTests();
+		//remove passed tests from list
+		List<String> passedTests = getPassedTests();
+		for(String test: passedTests){
+			if(tests.contains(test)){
+				tests.remove(test);
+			}
+		}
+		return tests;
 	}
 
 	public List<String> getPassesTests(){

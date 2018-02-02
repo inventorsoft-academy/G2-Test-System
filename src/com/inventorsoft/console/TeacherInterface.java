@@ -164,12 +164,14 @@ public class TeacherInterface {
 			break;
 		}
 		Group chosenGroup = groups.get(--groupIndex);
-		chosenGroup.addTest(tests.get(--testIndex));
-		groupController.update(chosenGroup);
-		if(groupController.saveAll()){
-			System.out.println("You added test to group successfully");
+		if(chosenGroup.addTest(tests.get(--testIndex))){
+			System.out.println("You assigned test to group successfully");
 		}
-		//TODO check if chosen group already has this test
+		else {
+			System.out.println("This test is already assigned to the group");
+		}
+		groupController.update(chosenGroup);
+		groupController.saveAll();
 	}
 
 	private static void createTestTemplate() throws IOException{
@@ -252,7 +254,7 @@ public class TeacherInterface {
 				if (Validator.isExit(input)) {
 					return;
 				}
-				answerVariants.add(input);
+				answerVariants.add((j+1) + ") " +input);
 			}
 
 

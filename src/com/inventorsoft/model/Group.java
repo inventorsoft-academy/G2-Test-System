@@ -26,8 +26,12 @@ public class Group {
 		return tests;
 	}
 
-	public void addTest(String test){
+	public boolean addTest(String test){
+		if(tests.contains(test)){
+			return false;
+		}
 		tests.add(test);
+		return true;
 	}
 
 	public Group(Integer groupId, String specialisation, List<String> tests) {

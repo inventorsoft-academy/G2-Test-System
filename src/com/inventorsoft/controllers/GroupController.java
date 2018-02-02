@@ -76,16 +76,14 @@ public class GroupController {
 
 	/**
 	 * saves data about all groups, rewriting the file
-	 * @return true if successful
 	 */
-	public boolean saveAll(){
+	public void saveAll(){
 		ArrayList<String> lines = new ArrayList<>();
 		for(Group group: groups) {
 			String line = groupMapper.format(group);
 			lines.add(line);
 		}
 		FileManager.rewrite(GROUP_DATA, lines);
-		return true;
 	}
 
 }
