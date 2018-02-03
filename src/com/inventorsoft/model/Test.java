@@ -7,9 +7,9 @@ import java.util.ArrayList;
  */
 public class Test {
 
-	private String name;
-	private ArrayList<Question> questions;
-	private ArrayList<String> rightAnswers;
+	protected String name;
+	protected ArrayList<Question> questions;
+	protected ArrayList<String> rightAnswers;
 
 	public String getName() {
 		return name;

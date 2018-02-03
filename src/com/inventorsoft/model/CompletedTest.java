@@ -6,6 +6,7 @@ import java.util.ArrayList;
  * Created by Nina on 14.01.2018.
  */
 public class CompletedTest extends Test{
+
 	private ArrayList<String> answers;
 	private float mark;
 
@@ -32,9 +33,16 @@ public class CompletedTest extends Test{
 
 	@Override
 	public String toString() {
-		return "CompletedTest{" +
-				"answers=" + answers +
-				", mark=" + mark +
-				'}';
+		StringBuilder str = new StringBuilder();
+		str.append("Test: " + name + "\n");
+		for(int i=0; i<questions.size(); i++){
+			str.append(questions.get(i));
+			str.append("Right answers: " + rightAnswers.get(i));
+			str.append("\n");
+			str.append("Student answers: " + answers.get(i));
+			str.append("\n");
+		}
+		str.append("Mark: " + mark);
+		return str.toString();
 	}
 }

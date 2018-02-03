@@ -33,10 +33,9 @@ public class TestController {
 	}
 
 	public static Test getBy(String name){
-		String testString = FileManager.readAll("src/com/inventorsoft/tests/" + name);
+		String testString = FileManager.readAll(TESTS_FOLDER + name);
 		TestMapper tm = new TestMapper();
 		Test test =  tm.parse(testString);
-		test.setName(name);
 		return test;
 	}
 

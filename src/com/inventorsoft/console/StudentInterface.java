@@ -52,13 +52,39 @@ public class StudentInterface {
 		}
 	}
 
-	private static void seePassedTests() {
+	private static void seePassedTests()throws IOException {
 		List<String> list = session.getPassedTests();
 		System.out.println("List of passed tests: ");
 		int i = 0;
 		for (String test: list) {
 			System.out.println(++i + ". " + test);
 		}
+		while(true) {
+			System.out.println("Enter number of test you want to see: ");
+			input = bufferedReader.readLine();
+
+			if(Validator.isExit(input)){
+				return;
+			}
+
+			if(!Validator.isDigit(input)){
+				System.out.println("Please, enter valid number");
+				continue;
+			}
+			int index = Integer.parseInt(input);
+			if(index < 0 || index > i){
+				System.out.println("Please, enter valid number");
+				continue;
+			}
+
+			printTest(list.get(index-1));
+			return;
+		}
+	}
+
+	private static void printTest(String testName) {
+		CompletedTest test = session.findCompletedTest(testName);
+		System.out.println(test.toString());
 	}
 
 	private static void seeAvailableTests()throws IOException {

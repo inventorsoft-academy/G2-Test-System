@@ -116,4 +116,22 @@ public class FileManager {
 		}
 		return list;
 	}
+
+	public static void writeToFileInDirectory(String directoryName, String fileName, String data) {
+		File directory = new File(directoryName);
+		if (! directory.exists()){
+			directory.mkdir();
+		}
+
+		File file = new File(directoryName + "/" + fileName + ".test");
+		try{
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write(data);
+			bw.close();
+		}
+		catch (IOException e){
+			e.printStackTrace();
+		}
+	}
 }

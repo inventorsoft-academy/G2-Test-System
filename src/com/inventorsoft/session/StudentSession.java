@@ -1,5 +1,6 @@
 package com.inventorsoft.session;
 
+import com.inventorsoft.controllers.CompletedTestController;
 import com.inventorsoft.controllers.StudentController;
 import com.inventorsoft.model.CompletedTest;
 import com.inventorsoft.model.Group;
@@ -44,10 +45,6 @@ public class StudentSession {
 		return tests;
 	}
 
-	public List<String> getPassesTests(){
-		return student.getTests();
-	}
-
 	public String getStudentName(){
 		return student.getNameSurname();
 	}
@@ -65,9 +62,13 @@ public class StudentSession {
 			}
 		}
 		CompletedTest completedTest = new CompletedTest(test,answers,mark);
+		CompletedTestController.save(student.getEmail(), completedTest);
 		student.addCompletedTest(completedTest.getName());
 		return completedTest;
 	}
 
+	public CompletedTest findCompletedTest(String testName) {
+		return CompletedTestController.getBy(student.getEmail(), testName);
+	}
 }
 
