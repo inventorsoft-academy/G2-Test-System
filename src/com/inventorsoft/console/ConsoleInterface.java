@@ -5,6 +5,8 @@ import com.inventorsoft.model.Student;
 import com.inventorsoft.service.StudentService;
 import com.inventorsoft.service.TeacherService;
 import com.inventorsoft.session.StudentSession;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,6 +15,7 @@ import java.io.InputStreamReader;
 /**
  * Created by Nina on 11.01.2018.
  */
+@SpringBootApplication
 public class ConsoleInterface {
 
 	private static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
@@ -20,6 +23,8 @@ public class ConsoleInterface {
 	private static String input;
 
 	public static void main(String[] args){
+
+		SpringApplication.run(ConsoleInterface.class, args);
 		System.out.println("Start of Testing Application");
 		generalMenu();
 	}
