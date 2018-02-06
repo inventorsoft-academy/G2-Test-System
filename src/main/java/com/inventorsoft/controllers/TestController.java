@@ -8,7 +8,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class TestController {
-	private static String TESTS_FOLDER = "src/com/inventorsoft/tests/";
+	private static String TESTS_FOLDER = "src/main/resources/tests/";
 
 	private ArrayList<String> testsNames;
 

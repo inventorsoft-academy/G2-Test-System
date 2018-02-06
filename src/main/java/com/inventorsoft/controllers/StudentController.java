@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class StudentController {
 
-	private static String STUDENT_DATA = "src/com/inventorsoft/objects/students.txt";
+	private static String STUDENT_DATA = "src/main/resources/objects/students.txt";
 
 	private ArrayList<Student> students;
 

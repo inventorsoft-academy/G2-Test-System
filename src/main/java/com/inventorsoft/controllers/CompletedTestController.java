@@ -5,7 +5,7 @@ import com.inventorsoft.model.CompletedTest;
 import com.inventorsoft.service.FileManager;
 
 public class CompletedTestController {
-	private static String TESTS_FOLDER = "src/com/inventorsoft/passed_tests/";
+	private static String TESTS_FOLDER = "src/main/resources/passed_tests/";
 
 
 	public static CompletedTest getBy(String folderName, String testName){
