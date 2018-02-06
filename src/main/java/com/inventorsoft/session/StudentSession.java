@@ -7,18 +7,25 @@ import com.inventorsoft.model.Group;
 import com.inventorsoft.model.Student;
 import com.inventorsoft.model.Test;
 import com.inventorsoft.service.TestVerifier;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
+@Scope("prototype")
 public class StudentSession {
 
 	private Student student;
 	private StudentController studentController;
 
-	public boolean start(String email){
-		studentController = new StudentController();
-		student = studentController.getBy(email);
+	public StudentSession(StudentController studentController) {
+		this.studentController = studentController;
+	}
+
+	public boolean initializeStudent(String email){
+		this.student = studentController.getBy(email);
 		if(student == null){
 			return false;
 		}

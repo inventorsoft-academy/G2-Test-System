@@ -5,8 +5,10 @@ import com.inventorsoft.model.Student;
 import com.inventorsoft.service.StudentService;
 import com.inventorsoft.service.TeacherService;
 import com.inventorsoft.session.StudentSession;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,21 +17,29 @@ import java.io.InputStreamReader;
 /**
  * Created by Nina on 11.01.2018.
  */
-@SpringBootApplication
-public class ConsoleInterface {
+@Component
+public class ConsoleInterface implements ApplicationListener<ContextRefreshedEvent> {
 
-	private static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+	private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-	private static String input;
+	private String input;
 
-	public static void main(String[] args){
+	private ApplicationContext applicationContext;
 
-		SpringApplication.run(ConsoleInterface.class, args);
-		System.out.println("Start of Testing Application");
+	private StudentSession studentSession;
+
+	public ConsoleInterface(ApplicationContext applicationContext, StudentSession studentSession) {
+		this.applicationContext = applicationContext;
+		this.studentSession = studentSession;
+	}
+
+	@Override
+	public void onApplicationEvent(ContextRefreshedEvent event) {
 		generalMenu();
 	}
 
-	private static void generalMenu() {
+	private void generalMenu() {
+		System.out.println("Start of Testing Application");
 		while (true){
 			System.out.println("Choose command: \n"+
 					"1 - Teacher login \n" +
@@ -74,7 +84,7 @@ public class ConsoleInterface {
 		}
 	}
 
-	private static void teacherLogin() throws IOException{
+	private void teacherLogin() throws IOException{
 
 		System.out.println("Teacher login. Enter number 0 to exit login");
 
@@ -100,7 +110,7 @@ public class ConsoleInterface {
 		}
 	}
 
-	private static void teacherRegistration() throws IOException{
+	private void teacherRegistration() throws IOException{
 
 		System.out.println("Teacher registration. Enter number 0 to exit registration");
 
@@ -170,7 +180,7 @@ public class ConsoleInterface {
 		}
 	}
 
-	private static void studentLogin()throws IOException {
+	private void studentLogin()throws IOException {
 		System.out.println("Student login. Enter number 0 to exit login");
 
 		System.out.println("Enter email:");
@@ -187,21 +197,22 @@ public class ConsoleInterface {
 		}
 		String password = input;
 
+		studentSession = applicationContext.getBean(StudentSession.class);
+
 		if(StudentService.login(email,password)) {
-		StudentSession ss = new StudentSession();
-			if(!ss.start(email)){
+			if(!studentSession.initializeStudent(email)){
 				System.out.println("Student not found!");
 				return;
 			}
-			System.out.println("Welcome, " + ss.getStudentName() + " !");
+			System.out.println("Welcome, " + studentSession.getStudentName() + " !");
 			System.out.println("You have successfully logged as student");
-			StudentInterface.generalMenu(ss);
+			StudentInterface.generalMenu(studentSession);
 		}else {
 			System.out.println("Login failed");
 		}
 	}
 
-	private static void studentRegistration() throws IOException{
+	private void studentRegistration() throws IOException{
 
 		System.out.println("Student registration. Enter number 0 to exit registration");
 		while(true) {

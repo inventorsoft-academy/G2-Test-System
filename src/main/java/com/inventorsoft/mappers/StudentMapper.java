@@ -1,10 +1,12 @@
 package com.inventorsoft.mappers;
 
 import com.inventorsoft.model.Student;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class StudentMapper implements DataMapper<Student> {
 
 	/**

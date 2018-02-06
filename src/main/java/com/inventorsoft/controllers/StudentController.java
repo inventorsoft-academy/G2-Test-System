@@ -3,9 +3,11 @@ package com.inventorsoft.controllers;
 import com.inventorsoft.mappers.StudentMapper;
 import com.inventorsoft.model.Student;
 import com.inventorsoft.service.FileManager;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
+@Component
 public class StudentController {
 
 	private static String STUDENT_DATA = "src/main/resources/objects/students.txt";
@@ -14,8 +16,8 @@ public class StudentController {
 
 	private StudentMapper studentMapper;
 
-	public StudentController() {
-		studentMapper = new StudentMapper();
+	public StudentController(StudentMapper studentMapper) {
+		this.studentMapper = studentMapper;
 		this.students = getAll();
 	}
 
