@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Group {
-	private static String groupData = "src/com/inventorsoft/objects/groups.txt";
+	private static String groupData = "src/main/resources/objects/groups.txt";
 	private Integer groupId;
 	private String specialisation;
 	private List<String> tests; // templates of tests that group can pass

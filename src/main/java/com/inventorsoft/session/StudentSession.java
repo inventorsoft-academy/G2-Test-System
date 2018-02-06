@@ -6,6 +6,7 @@ import com.inventorsoft.model.CompletedTest;
 import com.inventorsoft.model.Group;
 import com.inventorsoft.model.Student;
 import com.inventorsoft.model.Test;
+import com.inventorsoft.service.TestVerifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,13 +55,7 @@ public class StudentSession {
 	}
 
 	public CompletedTest pass(Test test, ArrayList<String> answers){
-		int mark = 0;
-		ArrayList<String> rightAns = test.getRightAnswers();
-		for (int i=0; i < rightAns.size(); i++) {
-			if(rightAns.get(i).equals(answers.get(i))){
-				mark += 1;
-			}
-		}
+		float mark = TestVerifier.evaluate(test.getRightAnswers(),answers);
 		CompletedTest completedTest = new CompletedTest(test,answers,mark);
 		CompletedTestController.save(student.getEmail(), completedTest);
 		student.addCompletedTest(completedTest.getName());

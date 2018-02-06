@@ -5,7 +5,7 @@ package com.inventorsoft.service;
  */
 public class TeacherService {
 
-	private static final String TEACHERS_DATA_FILE = "src/com/inventorsoft/loginfiles/teachers.txt";
+	private static final String TEACHERS_DATA_FILE = "src/main/resources/login_files/teachers.txt";
 
 	private static AuthorisationService service = new AuthorisationService(TEACHERS_DATA_FILE);
 

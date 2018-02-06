@@ -7,7 +7,7 @@ import com.inventorsoft.service.FileManager;
 import java.util.ArrayList;
 
 public class GroupController {
-	private static String GROUP_DATA = "src/com/inventorsoft/objects/groups.txt";
+	private static String GROUP_DATA = "src/main/resources/objects/groups.txt";
 
 	private ArrayList<Group> groups;
 

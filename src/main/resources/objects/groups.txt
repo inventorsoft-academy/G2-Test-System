@@ -1,0 +1,2 @@
+502; applied mathematics; new test to try test mapper.test~new test.test~test with a lot of variants.test~test without name.test
+301; specc; new test.test~test without name.test
