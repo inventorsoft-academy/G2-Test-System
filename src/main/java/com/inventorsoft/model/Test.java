@@ -1,6 +1,6 @@
 package com.inventorsoft.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Nina on 14.01.2018.
@@ -8,18 +8,18 @@ import java.util.ArrayList;
 public class Test {
 
 	protected String name;
-	protected ArrayList<Question> questions;
-	protected ArrayList<String> rightAnswers;
+	protected List<Question> questions;
+	protected List<String> rightAnswers;
 
 	public String getName() {
 		return name;
 	}
 
-	public ArrayList<Question> getQuestions() {
+	public List<Question> getQuestions() {
 		return questions;
 	}
 
-	public ArrayList<String> getRightAnswers() {
+	public List<String> getRightAnswers() {
 		return rightAnswers;
 	}
 
@@ -36,7 +36,7 @@ public class Test {
 		this.rightAnswers = test.getRightAnswers();
 	}
 
-	public Test(String name, ArrayList<Question> questions, ArrayList<String> rightAnswers) {
+	public Test(String name, List<Question> questions, List<String> rightAnswers) {
 		this.name = name;
 		this.questions = questions;
 		this.rightAnswers = rightAnswers;

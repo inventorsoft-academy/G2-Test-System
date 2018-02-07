@@ -6,11 +6,13 @@ import com.inventorsoft.service.FileManager;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TestController {
-	private static String TESTS_FOLDER = "src/main/resources/tests/";
 
-	private ArrayList<String> testsNames;
+	private static final String TESTS_FOLDER = "src/main/resources/tests/";
+
+	private List<String> testsNames;
 
 	public TestController() {
 		testsNames = getAll();
@@ -28,15 +30,14 @@ public class TestController {
 		return tests;
 	}
 
-	public ArrayList<String> getTestsNames(){
+	public List<String> getTestsNames(){
 		return testsNames;
 	}
 
 	public static Test getBy(String name){
 		String testString = FileManager.readAll(TESTS_FOLDER + name);
 		TestMapper tm = new TestMapper();
-		Test test =  tm.parse(testString);
-		return test;
+		return tm.parse(testString);
 	}
 
 	public static boolean save(Test test){

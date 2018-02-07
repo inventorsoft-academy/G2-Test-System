@@ -5,11 +5,13 @@ import com.inventorsoft.model.Group;
 import com.inventorsoft.service.FileManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GroupController {
-	private static String GROUP_DATA = "src/main/resources/objects/groups.txt";
 
-	private ArrayList<Group> groups;
+	private static final String GROUP_DATA = "src/main/resources/objects/groups.txt";
+
+	private List<Group> groups;
 
 	private GroupMapper groupMapper;
 
@@ -18,13 +20,13 @@ public class GroupController {
 		this.groups = this.getAll();
 	}
 
-	public ArrayList<Group> getGroups(){
+	public List<Group> getGroups(){
 		return groups;
 	}
 
-	private ArrayList<Group> getAll() {
-		ArrayList<String> lines = FileManager.readLines(GROUP_DATA);
-		ArrayList<Group> list = new ArrayList<>();
+	private List<Group> getAll() {
+		List<String> lines = FileManager.readLines(GROUP_DATA);
+		List<Group> list = new ArrayList<>();
 		for(String line : lines){
 			if(!line.equals("")){
 				list.add(groupMapper.parse(line));

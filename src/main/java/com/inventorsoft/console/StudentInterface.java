@@ -124,10 +124,10 @@ public class StudentInterface {
 	 */
 	private static void passTest(String testName)throws IOException{
 		Test test = TestController.getBy(testName);
-		ArrayList<String> answers = new ArrayList<>(test.getQuestions().size());
+		List<String> answers = new ArrayList<>(test.getQuestions().size());
 
 		System.out.println("Test: " + testName);
-		ArrayList<Question> questions = test.getQuestions();
+		List<Question> questions = test.getQuestions();
 		for (Question question : questions){
 			System.out.print(question);
 			while(true){
@@ -143,7 +143,7 @@ public class StudentInterface {
 
 		System.out.println("Test finished.");
 		CompletedTest res = session.pass(test,answers);
-		ArrayList<String> rightAns = test.getRightAnswers();
+		List<String> rightAns = test.getRightAnswers();
 		for (int i=0; i < rightAns.size(); i++) {
 			System.out.println("Question " + (i + 1));
 			System.out.println("right answer: " + rightAns.get(i));

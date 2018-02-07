@@ -66,7 +66,7 @@ public class TeacherInterface {
 
 	private static void seeStudentTestResults() throws IOException {
 		StudentController studentController = new StudentController();
-		ArrayList<Student> students = studentController.getStudents();
+		List<Student> students = studentController.getStudents();
 		System.out.println("List of students:");
 		int i = 0;
 		for(Student student: students){
@@ -174,7 +174,7 @@ public class TeacherInterface {
 	private static void assignTestForGroup() throws IOException {
 
 		GroupController groupController = new GroupController();
-		ArrayList<Group> groups = groupController.getGroups();
+		List<Group> groups = groupController.getGroups();
 		System.out.println("List of groups:");
 		int i = 0;
 		for(Group group: groups){
@@ -202,7 +202,7 @@ public class TeacherInterface {
 			break;
 		}
 		TestController testController = new TestController();
-		ArrayList<String> tests = testController.getTestsNames();
+		List<String> tests = testController.getTestsNames();
 		System.out.println("List of tests:");
 		i = 0;
 		for(String test: tests){

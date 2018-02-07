@@ -64,7 +64,7 @@ public class ConsoleInterface {
 				System.exit(0);
 			}
 			catch (NumberFormatException e){
-				e.printStackTrace();
+				//e.printStackTrace();    // log
 				System.out.println("Input is not a command number, please try again");
 			}
 		}

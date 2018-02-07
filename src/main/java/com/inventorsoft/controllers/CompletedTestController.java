@@ -5,14 +5,13 @@ import com.inventorsoft.model.CompletedTest;
 import com.inventorsoft.service.FileManager;
 
 public class CompletedTestController {
-	private static String TESTS_FOLDER = "src/main/resources/passed_tests/";
+	private static final String TESTS_FOLDER = "src/main/resources/passed_tests/";
 
 
 	public static CompletedTest getBy(String folderName, String testName){
 		String testString = FileManager.readAll(TESTS_FOLDER + folderName + "/" + testName + ".test");
 		CompletedTestMapper tm = new CompletedTestMapper();
-		CompletedTest test =  tm.parse(testString);
-		return test;
+		return tm.parse(testString);
 	}
 
 	public static boolean save(String folderName, CompletedTest test){

@@ -31,7 +31,7 @@ public class TestMapper implements DataMapper<Test> {
 		ArrayList<String> answersList = new ArrayList<>();
 
 		String lineWithName= questions[0];
-		int indexN = lineWithName.indexOf(":");
+		int indexN = lineWithName.indexOf(':');
 		String name = lineWithName.substring(indexN+1).trim();
 
 		for(int j=1; j<questions.length ; j++){
@@ -41,7 +41,7 @@ public class TestMapper implements DataMapper<Test> {
 				variants.add(lines[i]);
 			}
 			String lineWithAnswers = lines[lines.length-1];
-			int index = lineWithAnswers.indexOf(":");
+			int index = lineWithAnswers.indexOf(':');
 			String answers = lineWithAnswers.substring(index+1);
 			answersList.add(answers.trim());
 			Question q = new Question(lines[0],variants);
