@@ -30,6 +30,10 @@ public class StudentController {
 		return list;
 	}
 
+	public ArrayList<Student> getStudents() {
+		return students;
+	}
+
 	/**
 	 * find student data in files and return student object
 	 * @param email of student we are looking for

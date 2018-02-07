@@ -25,7 +25,7 @@ public class StudentSession {
 		return true;
 	}
 
-	public void end(){
+	public void finish(){
 		studentController.update(student);
 		studentController.saveAll();
 	}
@@ -59,6 +59,7 @@ public class StudentSession {
 		CompletedTest completedTest = new CompletedTest(test,answers,mark);
 		CompletedTestController.save(student.getEmail(), completedTest);
 		student.addCompletedTest(completedTest.getName());
+		finish();
 		return completedTest;
 	}
 

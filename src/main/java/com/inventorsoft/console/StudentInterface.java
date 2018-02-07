@@ -38,7 +38,7 @@ public class StudentInterface {
 
 						break;
 					case 4:
-						ss.end();
+
 						return;
 					default:
 						System.out.println("You entered wrong command number, please try again");
