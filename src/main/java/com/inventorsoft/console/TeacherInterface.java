@@ -1,15 +1,16 @@
 package com.inventorsoft.console;
 
+import com.inventorsoft.controllers.CompletedTestController;
 import com.inventorsoft.controllers.GroupController;
+import com.inventorsoft.controllers.StudentController;
 import com.inventorsoft.controllers.TestController;
-import com.inventorsoft.model.Group;
-import com.inventorsoft.model.Question;
-import com.inventorsoft.model.Test;
+import com.inventorsoft.model.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TeacherInterface {
 
@@ -44,7 +45,7 @@ public class TeacherInterface {
 						assignTestForGroup();
 						break;
 					case 5:
-
+						seeStudentTestResults();
 						break;
 					case 6:
 
@@ -61,6 +62,72 @@ public class TeacherInterface {
 				System.out.println("Input is not a command number, please try again");
 			}
 		}
+	}
+
+	private static void seeStudentTestResults() throws IOException {
+		StudentController studentController = new StudentController();
+		List<Student> students = studentController.getStudents();
+		System.out.println("List of students:");
+		int i = 0;
+		for(Student student: students){
+			System.out.println(++i + ". " + student.getNameSurname());
+		}
+		System.out.println("Choose index of student whose test results you want to see");
+		int studentIndex;
+		while(true) {
+			input = bufferedReader.readLine();
+
+			if(Validator.isExit(input)){
+				return;
+			}
+			try {
+				studentIndex = Integer.parseInt(input);
+			}catch (NumberFormatException e){
+				System.out.println("Index contains invalid symbols. Please, try again");
+				continue;
+			}
+
+			if(studentIndex > i){
+				System.out.println("Index is bigger then list. Please, try again");
+				continue;
+			}
+			break;
+		}
+		Student chosenStudent = students.get(--studentIndex);
+		List<String> tests = chosenStudent.getTests();
+		if(tests.size() == 0){
+			System.out.println("This student have no passed tests");
+			return;
+		}
+		System.out.println("List of tests:");
+		i = 0;
+		for(String test: tests){
+			System.out.println(++i + ". " + test);
+		}
+		System.out.println("Choose index of test you want to see");
+		int testIndex;
+		while(true) {
+			input = bufferedReader.readLine();
+
+			if(Validator.isExit(input)){
+				return;
+			}
+			try {
+				testIndex = Integer.parseInt(input);
+			}catch (NumberFormatException e){
+				System.out.println("Index contains invalid symbols. Please, try again");
+				continue;
+			}
+
+			if(testIndex > i){
+				System.out.println("Index is bigger then list. Please, try again");
+				continue;
+			}
+			break;
+		}
+		String chosenTest = tests.get(--testIndex);
+		CompletedTest completedTest = CompletedTestController.getBy(chosenStudent.getEmail(),chosenTest);
+		System.out.println(completedTest);
 	}
 
 	private static void createStudentGroup()throws IOException {
@@ -107,7 +174,7 @@ public class TeacherInterface {
 	private static void assignTestForGroup() throws IOException {
 
 		GroupController groupController = new GroupController();
-		ArrayList<Group> groups = groupController.getGroups();
+		List<Group> groups = groupController.getGroups();
 		System.out.println("List of groups:");
 		int i = 0;
 		for(Group group: groups){
@@ -135,7 +202,7 @@ public class TeacherInterface {
 			break;
 		}
 		TestController testController = new TestController();
-		ArrayList<String> tests = testController.getTestsNames();
+		List<String> tests = testController.getTestsNames();
 		System.out.println("List of tests:");
 		i = 0;
 		for(String test: tests){

@@ -6,10 +6,10 @@ import java.util.List;
 public class AuthorisationService {
 
 	private String dataFile;
-	private static List<String> emails;
-	private static List<String> passwords;
+	private List<String> emails;
+	private List<String> passwords;
 
-	AuthorisationService(String dataFile) {
+	public AuthorisationService(String dataFile) {
 		this.dataFile = dataFile;
 		readData();
 	}
@@ -28,11 +28,7 @@ public class AuthorisationService {
 	}
 
 	public boolean register( String email, String password){
-		if(FileManager.writeTo(dataFile,"\n" + email + " : " + password )) {
-			return true;
-		}else {
-			return false;
-		}
+		return FileManager.writeTo(dataFile,"\n" + email + " : " + password );
 	}
 
 	public boolean existEmail(String email){

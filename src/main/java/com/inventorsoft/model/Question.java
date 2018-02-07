@@ -1,15 +1,15 @@
 package com.inventorsoft.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Nina on 14.01.2018.
  */
 public class Question {
 	private String question;
-	private ArrayList<String> answerVariants;
+	private List<String> answerVariants;
 
-	public Question(String question, ArrayList<String> answers) {
+	public Question(String question, List<String> answers) {
 		this.question = question;
 		this.answerVariants = answers;
 	}

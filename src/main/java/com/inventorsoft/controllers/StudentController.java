@@ -6,13 +6,14 @@ import com.inventorsoft.service.FileManager;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class StudentController {
 
-	private static String STUDENT_DATA = "src/main/resources/objects/students.txt";
+	private static final String STUDENT_DATA = "src/main/resources/objects/students.txt";
 
-	private ArrayList<Student> students;
+	private List<Student> students;
 
 	private StudentMapper studentMapper;
 
@@ -21,15 +22,19 @@ public class StudentController {
 		this.students = getAll();
 	}
 
-	private ArrayList<Student> getAll(){
-		ArrayList<String> lines = FileManager.readLines(STUDENT_DATA);
-		ArrayList<Student> list = new ArrayList<>();
+	private List<Student> getAll(){
+		List<String> lines = FileManager.readLines(STUDENT_DATA);
+		List<Student> list = new ArrayList<>();
 		for(String line : lines){
 			if(!line.equals("")){
 				list.add(studentMapper.parse(line));
 			}
 		}
 		return list;
+	}
+
+	public List<Student> getStudents() {
+		return students;
 	}
 
 	/**

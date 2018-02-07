@@ -10,7 +10,6 @@ import com.inventorsoft.service.TestVerifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -32,7 +31,7 @@ public class StudentSession {
 		return true;
 	}
 
-	public void end(){
+	private void finish(){
 		studentController.update(student);
 		studentController.saveAll();
 	}
@@ -61,11 +60,12 @@ public class StudentSession {
 		return student.getTests();
 	}
 
-	public CompletedTest pass(Test test, ArrayList<String> answers){
+	public CompletedTest pass(Test test, List<String> answers){
 		float mark = TestVerifier.evaluate(test.getRightAnswers(),answers);
 		CompletedTest completedTest = new CompletedTest(test,answers,mark);
 		CompletedTestController.save(student.getEmail(), completedTest);
 		student.addCompletedTest(completedTest.getName());
+		finish();
 		return completedTest;
 	}
 

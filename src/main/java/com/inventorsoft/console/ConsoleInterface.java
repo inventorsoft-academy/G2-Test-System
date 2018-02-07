@@ -2,8 +2,7 @@ package com.inventorsoft.console;
 
 import com.inventorsoft.controllers.StudentController;
 import com.inventorsoft.model.Student;
-import com.inventorsoft.service.StudentService;
-import com.inventorsoft.service.TeacherService;
+import com.inventorsoft.service.AuthorisationService;
 import com.inventorsoft.session.StudentSession;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
@@ -21,8 +20,11 @@ import java.io.InputStreamReader;
 public class ConsoleInterface implements ApplicationListener<ContextRefreshedEvent> {
 
 	private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-
 	private String input;
+
+	private static final String STUDENT_DATA_FILE = "src/main/resources/login_files/students.txt";
+	private static final String TEACHERS_DATA_FILE = "src/main/resources/login_files/teachers.txt";
+	private static AuthorisationService service;
 
 	private ApplicationContext applicationContext;
 
@@ -65,11 +67,10 @@ public class ConsoleInterface implements ApplicationListener<ContextRefreshedEve
 					case 5:
 						try {
 							bufferedReader.close();
-							System.exit(0);
 						}catch (IOException e){
 							e.printStackTrace();
-							System.exit(0);
 						}
+						return;
 					default:
 						System.out.println("You entered wrong command number, please try again");
 				}
@@ -78,7 +79,7 @@ public class ConsoleInterface implements ApplicationListener<ContextRefreshedEve
 				System.exit(0);
 			}
 			catch (NumberFormatException e){
-				e.printStackTrace();
+				//e.printStackTrace();    // log
 				System.out.println("Input is not a command number, please try again");
 			}
 		}
@@ -102,7 +103,9 @@ public class ConsoleInterface implements ApplicationListener<ContextRefreshedEve
 		}
 		String password = input;
 
-		if(TeacherService.login(email, password)) {
+		service = new AuthorisationService(TEACHERS_DATA_FILE);
+
+		if(service.login(email, password)) {
 			System.out.println("You have successfully logged.");
 			TeacherInterface.generalMenu();
 		}else {
@@ -135,6 +138,8 @@ public class ConsoleInterface implements ApplicationListener<ContextRefreshedEve
 		}
 		String nameSurname =  input;
 
+		service = new AuthorisationService(TEACHERS_DATA_FILE);
+
 		while(true) {
 			System.out.println("Enter email:");
 			input = bufferedReader.readLine();
@@ -148,7 +153,7 @@ public class ConsoleInterface implements ApplicationListener<ContextRefreshedEve
 				continue;
 			}
 
-			if(TeacherService.existEmail(input)){
+			if(service.existEmail(input)){
 				System.out.println("Teacher with entered email already exists");
 				continue;
 			}
@@ -173,7 +178,7 @@ public class ConsoleInterface implements ApplicationListener<ContextRefreshedEve
 
 		String password =  input;
 
-		if(TeacherService.register(email, password)) {
+		if(service.register(email, password)) {
 			System.out.println("You have successfully registered. Please login with your name and password");
 		}else {
 			System.out.println("Registration failed");
@@ -198,8 +203,9 @@ public class ConsoleInterface implements ApplicationListener<ContextRefreshedEve
 		String password = input;
 
 		studentSession = applicationContext.getBean(StudentSession.class);
+		service = new AuthorisationService(STUDENT_DATA_FILE);
 
-		if(StudentService.login(email,password)) {
+		if(service.login(email,password)) {
 			if(!studentSession.initializeStudent(email)){
 				System.out.println("Student not found!");
 				return;
@@ -215,6 +221,7 @@ public class ConsoleInterface implements ApplicationListener<ContextRefreshedEve
 	private void studentRegistration() throws IOException{
 
 		System.out.println("Student registration. Enter number 0 to exit registration");
+
 		while(true) {
 			System.out.println("Enter name and surname:");
 			input = bufferedReader.readLine();
@@ -236,6 +243,8 @@ public class ConsoleInterface implements ApplicationListener<ContextRefreshedEve
 		}
 		String nameSurname =  input;
 
+		service = new AuthorisationService(STUDENT_DATA_FILE);
+
 		while(true) {
 			System.out.println("Enter email:");
 			input = bufferedReader.readLine();
@@ -249,7 +258,7 @@ public class ConsoleInterface implements ApplicationListener<ContextRefreshedEve
 				continue;
 			}
 
-			if(StudentService.existEmail(input)){
+			if(service.existEmail(input)){
 				System.out.println("Student with entered email already exists");
 				continue;
 			}
@@ -300,7 +309,8 @@ public class ConsoleInterface implements ApplicationListener<ContextRefreshedEve
 		}else{
 			System.out.println("Failed to save account data");
 		}
-		if(StudentService.register(email,password)) {
+
+		if(service.register(email,password)) {
 			System.out.println("You have successfully registered. Please login with your name and password");
 		}else {
 			System.out.println("Registration failed");

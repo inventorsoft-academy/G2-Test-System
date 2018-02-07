@@ -16,7 +16,6 @@ public class CompletedTestMapper implements DataMapper<CompletedTest> {
 		List<Question> questions = test.getQuestions();
 		List<String> rightAnswers = test.getRightAnswers();
 		List<String> answers = test.getAnswers();
-		int j = 1;
 		for (int i = 0; i <questions.size(); i++) {
 			result.append("Question " );
 			result.append(questions.get(i).toString());
@@ -38,11 +37,11 @@ public class CompletedTestMapper implements DataMapper<CompletedTest> {
 		String[] nameAndMark = questions[0].split("\n");
 
 		String lineWithName= nameAndMark[0];
-		int indexN = lineWithName.indexOf(":");
+		int indexN = lineWithName.indexOf(':');
 		String name = lineWithName.substring(indexN+1).trim();
 
 		String lineWithMark= nameAndMark[1];
-		int indexM = lineWithMark.indexOf(":");
+		int indexM = lineWithMark.indexOf(':');
 		String m = lineWithMark.substring(indexM+1).trim();
 		float mark = Float.parseFloat(m);
 
@@ -56,12 +55,12 @@ public class CompletedTestMapper implements DataMapper<CompletedTest> {
 			questionsList.add(q);
 
 			String lineWithRightAnswers = lines[lines.length-2];
-			int index = lineWithRightAnswers.indexOf(":");
+			int index = lineWithRightAnswers.indexOf(':');
 			String rightAnswers = lineWithRightAnswers.substring(index+1);
 			rightAnswersList.add(rightAnswers.trim());
 
 			String lineWithAnswers = lines[lines.length-1];
-			index = lineWithAnswers.indexOf(":");
+			index = lineWithAnswers.indexOf(':');
 			String answers = lineWithAnswers.substring(index+1);
 			answersList.add(answers.trim());
 		}

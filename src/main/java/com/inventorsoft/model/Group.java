@@ -3,7 +3,6 @@ package com.inventorsoft.model;
 import com.inventorsoft.service.FileManager;
 import com.inventorsoft.mappers.GroupMapper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,7 +48,7 @@ public class Group {
 
 
 	public static Group getBy(Integer groupId){
-		ArrayList<String> lines = FileManager.readLines(groupData);
+		List<String> lines = FileManager.readLines(groupData);
 		String found = "";
 		//find group by id
 		for (String line : lines) {
@@ -60,8 +59,7 @@ public class Group {
 			}
 		}
 		GroupMapper gm = new GroupMapper();
-		Group group = gm.parse(found);
-		return group;
+		return gm.parse(found);
 	}
 
 	@Override
