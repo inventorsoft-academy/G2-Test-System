@@ -9,7 +9,7 @@ public class AuthorisationService {
 	private static List<String> emails;
 	private static List<String> passwords;
 
-	AuthorisationService(String dataFile) {
+	public AuthorisationService(String dataFile) {
 		this.dataFile = dataFile;
 		readData();
 	}

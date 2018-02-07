@@ -2,8 +2,7 @@ package com.inventorsoft.console;
 
 import com.inventorsoft.controllers.StudentController;
 import com.inventorsoft.model.Student;
-import com.inventorsoft.service.StudentService;
-import com.inventorsoft.service.TeacherService;
+import com.inventorsoft.service.AuthorisationService;
 import com.inventorsoft.session.StudentSession;
 
 import java.io.BufferedReader;
@@ -15,8 +14,11 @@ import java.io.InputStreamReader;
  */
 public class ConsoleInterface {
 
-	private static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+	private static final String STUDENT_DATA_FILE = "src/main/resources/login_files/students.txt";
+	private static final String TEACHERS_DATA_FILE = "src/main/resources/login_files/teachers.txt";
+	private static AuthorisationService service;
 
+	private static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 	private static String input;
 
 	public static void main(String[] args){
@@ -50,11 +52,10 @@ public class ConsoleInterface {
 					case 5:
 						try {
 							bufferedReader.close();
-							System.exit(0);
 						}catch (IOException e){
 							e.printStackTrace();
-							System.exit(0);
 						}
+						return;
 					default:
 						System.out.println("You entered wrong command number, please try again");
 				}
@@ -87,7 +88,9 @@ public class ConsoleInterface {
 		}
 		String password = input;
 
-		if(TeacherService.login(email, password)) {
+		service = new AuthorisationService(TEACHERS_DATA_FILE);
+
+		if(service.login(email, password)) {
 			System.out.println("You have successfully logged.");
 			TeacherInterface.generalMenu();
 		}else {
@@ -120,6 +123,8 @@ public class ConsoleInterface {
 		}
 		String nameSurname =  input;
 
+		service = new AuthorisationService(TEACHERS_DATA_FILE);
+
 		while(true) {
 			System.out.println("Enter email:");
 			input = bufferedReader.readLine();
@@ -133,7 +138,7 @@ public class ConsoleInterface {
 				continue;
 			}
 
-			if(TeacherService.existEmail(input)){
+			if(service.existEmail(input)){
 				System.out.println("Teacher with entered email already exists");
 				continue;
 			}
@@ -158,7 +163,7 @@ public class ConsoleInterface {
 
 		String password =  input;
 
-		if(TeacherService.register(email, password)) {
+		if(service.register(email, password)) {
 			System.out.println("You have successfully registered. Please login with your name and password");
 		}else {
 			System.out.println("Registration failed");
@@ -182,7 +187,9 @@ public class ConsoleInterface {
 		}
 		String password = input;
 
-		if(StudentService.login(email,password)) {
+		service = new AuthorisationService(STUDENT_DATA_FILE);
+
+		if(service.login(email,password)) {
 		StudentSession ss = new StudentSession();
 			if(!ss.start(email)){
 				System.out.println("Student not found!");
@@ -199,6 +206,7 @@ public class ConsoleInterface {
 	private static void studentRegistration() throws IOException{
 
 		System.out.println("Student registration. Enter number 0 to exit registration");
+
 		while(true) {
 			System.out.println("Enter name and surname:");
 			input = bufferedReader.readLine();
@@ -220,6 +228,8 @@ public class ConsoleInterface {
 		}
 		String nameSurname =  input;
 
+		service = new AuthorisationService(STUDENT_DATA_FILE);
+
 		while(true) {
 			System.out.println("Enter email:");
 			input = bufferedReader.readLine();
@@ -233,7 +243,7 @@ public class ConsoleInterface {
 				continue;
 			}
 
-			if(StudentService.existEmail(input)){
+			if(service.existEmail(input)){
 				System.out.println("Student with entered email already exists");
 				continue;
 			}
@@ -284,7 +294,8 @@ public class ConsoleInterface {
 		}else{
 			System.out.println("Failed to save account data");
 		}
-		if(StudentService.register(email,password)) {
+
+		if(service.register(email,password)) {
 			System.out.println("You have successfully registered. Please login with your name and password");
 		}else {
 			System.out.println("Registration failed");
