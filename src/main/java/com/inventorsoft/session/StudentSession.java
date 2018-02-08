@@ -10,6 +10,7 @@ import com.inventorsoft.service.TestVerifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PreDestroy;
 import java.util.List;
 
 @Component
@@ -31,6 +32,7 @@ public class StudentSession {
 		return true;
 	}
 
+	//TODO @PreDestroy
 	private void finish(){
 		studentController.update(student);
 		studentController.saveAll();
@@ -65,6 +67,7 @@ public class StudentSession {
 		CompletedTest completedTest = new CompletedTest(test,answers,mark);
 		CompletedTestController.save(student.getEmail(), completedTest);
 		student.addCompletedTest(completedTest.getName());
+		studentController.update(student);
 		finish();
 		return completedTest;
 	}

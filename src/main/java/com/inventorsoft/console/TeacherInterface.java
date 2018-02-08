@@ -5,6 +5,7 @@ import com.inventorsoft.controllers.GroupController;
 import com.inventorsoft.controllers.StudentController;
 import com.inventorsoft.controllers.TestController;
 import com.inventorsoft.model.*;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,12 +13,19 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class TeacherInterface {
 
-	private static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-	private static String input;
+	private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+	private String input;
 
-	public static void generalMenu(){
+	private StudentController studentController;
+
+	public TeacherInterface(StudentController studentController) {
+		this.studentController = studentController;
+	}
+
+	public void generalMenu(){
 
 		while(true){
 			System.out.println("Logged as teacher. Choose command: \n"+
@@ -64,8 +72,8 @@ public class TeacherInterface {
 		}
 	}
 
-	private static void seeStudentTestResults() throws IOException {
-		StudentController studentController = new StudentController();
+	private void seeStudentTestResults() throws IOException {
+
 		List<Student> students = studentController.getStudents();
 		System.out.println("List of students:");
 		int i = 0;
@@ -130,7 +138,7 @@ public class TeacherInterface {
 		System.out.println(completedTest);
 	}
 
-	private static void createStudentGroup()throws IOException {
+	private void createStudentGroup()throws IOException {
 		System.out.println("You are creating student group. Enter number 0 to exit");
 
 		while(true) {
@@ -171,7 +179,7 @@ public class TeacherInterface {
 
 	}
 
-	private static void assignTestForGroup() throws IOException {
+	private void assignTestForGroup() throws IOException {
 
 		GroupController groupController = new GroupController();
 		List<Group> groups = groupController.getGroups();
@@ -241,7 +249,7 @@ public class TeacherInterface {
 		groupController.saveAll();
 	}
 
-	private static void createTestTemplate() throws IOException{
+	private void createTestTemplate() throws IOException{
 		System.out.println("Creating test template. Enter number 0 to exit");
 
 		while(true) {
@@ -352,9 +360,6 @@ public class TeacherInterface {
 		}else {
 			System.out.println("Saving to file failed");
 		}
-	}
-	public static void main(String ... args){
-		TeacherInterface.generalMenu();
 	}
 
 }

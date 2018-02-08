@@ -4,9 +4,10 @@ import com.inventorsoft.controllers.StudentController;
 import com.inventorsoft.model.Student;
 import com.inventorsoft.service.AuthorisationService;
 import com.inventorsoft.session.StudentSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -17,7 +18,9 @@ import java.io.InputStreamReader;
  * Created by Nina on 11.01.2018.
  */
 @Component
-public class ConsoleInterface implements ApplicationListener<ContextRefreshedEvent> {
+public class ConsoleInterface implements CommandLineRunner {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(ConsoleInterface.class);
 
 	private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 	private String input;
@@ -27,16 +30,18 @@ public class ConsoleInterface implements ApplicationListener<ContextRefreshedEve
 	private static AuthorisationService service;
 
 	private ApplicationContext applicationContext;
+	private StudentController studentController;
 
 	private StudentSession studentSession;
+	private TeacherInterface teacherInterface;
 
-	public ConsoleInterface(ApplicationContext applicationContext, StudentSession studentSession) {
+	public ConsoleInterface(ApplicationContext applicationContext, StudentController studentController) {
 		this.applicationContext = applicationContext;
-		this.studentSession = studentSession;
+		this.studentController = studentController;
 	}
 
 	@Override
-	public void onApplicationEvent(ContextRefreshedEvent event) {
+	public void run(String...args){
 		generalMenu();
 	}
 
@@ -107,7 +112,8 @@ public class ConsoleInterface implements ApplicationListener<ContextRefreshedEve
 
 		if(service.login(email, password)) {
 			System.out.println("You have successfully logged.");
-			TeacherInterface.generalMenu();
+			teacherInterface = applicationContext.getBean(TeacherInterface.class);
+			teacherInterface.generalMenu();
 		}else {
 			System.out.println("Login failed");
 		}
@@ -202,10 +208,10 @@ public class ConsoleInterface implements ApplicationListener<ContextRefreshedEve
 		}
 		String password = input;
 
-		studentSession = applicationContext.getBean(StudentSession.class);
 		service = new AuthorisationService(STUDENT_DATA_FILE);
 
 		if(service.login(email,password)) {
+			studentSession = applicationContext.getBean(StudentSession.class);
 			if(!studentSession.initializeStudent(email)){
 				System.out.println("Student not found!");
 				return;
@@ -304,7 +310,7 @@ public class ConsoleInterface implements ApplicationListener<ContextRefreshedEve
 		Integer group = Integer.parseInt(input);
 		Student student = new Student(nameSurname,email,password,group);
 
-		if(StudentController.saveNew(student)){
+		if(studentController.saveNew(student)){
 			System.out.println("Your account data saved");
 		}else{
 			System.out.println("Failed to save account data");

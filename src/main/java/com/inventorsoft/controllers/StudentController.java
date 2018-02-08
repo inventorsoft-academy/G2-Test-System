@@ -57,8 +57,7 @@ public class StudentController {
 	 * save student data to file
 	 * @return true if saved successfully
 	 */
-	public static boolean saveNew(Student student){
-		StudentMapper studentMapper = new StudentMapper();
+	public boolean saveNew(Student student){
 		String data = studentMapper.format(student);
 		FileManager.writeTo(STUDENT_DATA, data);
 		return true;
