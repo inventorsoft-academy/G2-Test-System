@@ -123,7 +123,8 @@ public class StudentInterface {
 	 * and see mark (count of correctly  answered questions)
 	 */
 	private static void passTest(String testName)throws IOException{
-		Test test = TestController.getBy(testName);
+		TestController controller = new TestController();
+		Test test = controller.getBy(testName);
 		List<String> answers = new ArrayList<>(test.getQuestions().size());
 
 		System.out.println("Test: " + testName);

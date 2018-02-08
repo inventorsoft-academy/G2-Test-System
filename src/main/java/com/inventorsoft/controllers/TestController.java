@@ -36,7 +36,7 @@ public class TestController {
 		return testsNames;
 	}
 
-	public static Test getBy(String name){
+	public Test getBy(String name){
 		String testString = FileManager.readAll(TESTS_FOLDER + name + ".test" );
 		TestMapper tm = new TestMapper();
 		return tm.parse(testString);

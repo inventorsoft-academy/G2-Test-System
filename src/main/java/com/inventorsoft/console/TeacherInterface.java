@@ -22,12 +22,11 @@ public class TeacherInterface {
 		while(true){
 			System.out.println("Logged as teacher. Choose command: \n"+
 					"1 - Create test template \n" +
-					"2 - Import test template from file \n" +
+					"2 - See test template \n" +
 					"3 - Create student group \n" +
 					"4 - Assign test for group \n" +
 					"5 - See student test results \n" +
-					"6 - Export student test results \n" +
-					"7 - Return to previous menu");
+					"6 - Return to previous menu");
 
 			try {
 				int command = Integer.parseInt(bufferedReader.readLine());
@@ -36,7 +35,7 @@ public class TeacherInterface {
 						createTestTemplate();
 						break;
 					case 2:
-
+						seeTestTemplate();
 						break;
 					case 3:
 						createStudentGroup();
@@ -48,9 +47,6 @@ public class TeacherInterface {
 						seeStudentTestResults();
 						break;
 					case 6:
-
-						break;
-					case 7:
 						return;
 					default:
 						System.out.println("You entered wrong command number, please try again");
@@ -62,6 +58,39 @@ public class TeacherInterface {
 				System.out.println("Input is not a command number, please try again");
 			}
 		}
+	}
+
+	private static void seeTestTemplate() throws IOException{
+		TestController controller = new TestController();
+		List<String> list = controller.getTestsNames();
+		int i = 0;
+		System.out.println("List of tests");
+		for(String test : list){
+			System.out.println(++i +". " + test);
+		}
+		System.out.println("Chose number of test you want to see");
+		int testIndex;
+		while(true) {
+			input = bufferedReader.readLine();
+
+			if(Validator.isExit(input)){
+				return;
+			}
+			try {
+				testIndex = Integer.parseInt(input);
+			}catch (NumberFormatException e){
+				System.out.println("Index contains invalid symbols. Please, try again");
+				continue;
+			}
+
+			if(testIndex > i){
+				System.out.println("Index is bigger then list. Please, try again");
+				continue;
+			}
+			break;
+		}
+		Test test = controller.getBy(list.get(--testIndex));
+		System.out.println(test);
 	}
 
 	private static void seeStudentTestResults() throws IOException {
