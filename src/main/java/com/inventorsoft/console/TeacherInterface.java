@@ -133,6 +133,7 @@ public class TeacherInterface {
 	private static void createStudentGroup()throws IOException {
 		System.out.println("You are creating student group. Enter number 0 to exit");
 
+		Integer groupId;
 		while(true) {
 			System.out.println("Enter id of group:");
 			input = bufferedReader.readLine();
@@ -145,9 +146,15 @@ public class TeacherInterface {
 				System.out.println("Please, enter valid id");
 				continue;
 			}
+
+			groupId = Integer.parseInt(input);
+			GroupController controller = new GroupController();
+			if(controller.exists(groupId)){
+				System.out.println("This group already exist");
+				continue;
+			}
 			break;
 		}
-		Integer groupId = Integer.parseInt(input);
 
 		while(true) {
 			System.out.println("Enter specialization of group:");

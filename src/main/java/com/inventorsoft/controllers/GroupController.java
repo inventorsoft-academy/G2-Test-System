@@ -51,6 +51,9 @@ public class GroupController {
 		return g;
 	}
 
+	public boolean exists(Integer groupId){
+		return groups.stream().map(Group::getGroupId).anyMatch(group->group.equals(groupId));
+	}
 	/** Static, is called without creating controller object, because doesn't need
 	 * information about all groups, just writes to end of file.
 	 * Save new group data to file.

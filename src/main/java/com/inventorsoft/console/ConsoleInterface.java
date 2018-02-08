@@ -1,5 +1,6 @@
 package com.inventorsoft.console;
 
+import com.inventorsoft.controllers.GroupController;
 import com.inventorsoft.controllers.StudentController;
 import com.inventorsoft.model.Student;
 import com.inventorsoft.service.AuthorisationService;
@@ -267,6 +268,7 @@ public class ConsoleInterface {
 		}
 		String password =  input;
 
+		Integer group;
 		while(true) {
 			System.out.println("Enter group:");
 			input = bufferedReader.readLine();
@@ -280,13 +282,14 @@ public class ConsoleInterface {
 				continue;
 			}
 
-			if(input.length() < 3){
-				System.out.println("Group number is too short. Please, try again");
+			group = Integer.parseInt(input);
+			GroupController controller = new GroupController();
+			if(!controller.exists(group)){
+				System.out.println("There is no such group");
 				continue;
 			}
 			break;
 		}
-		Integer group = Integer.parseInt(input);
 		Student student = new Student(nameSurname,email,password,group);
 
 		if(StudentController.saveNew(student)){
