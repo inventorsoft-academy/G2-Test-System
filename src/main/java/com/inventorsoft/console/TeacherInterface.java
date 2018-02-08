@@ -1,9 +1,9 @@
 package com.inventorsoft.console;
 
-import com.inventorsoft.controllers.CompletedTestController;
-import com.inventorsoft.controllers.GroupController;
-import com.inventorsoft.controllers.StudentController;
-import com.inventorsoft.controllers.TestController;
+import com.inventorsoft.service.CompletedTestService;
+import com.inventorsoft.service.GroupService;
+import com.inventorsoft.service.StudentService;
+import com.inventorsoft.service.TestService;
 import com.inventorsoft.model.*;
 import org.springframework.stereotype.Component;
 
@@ -19,10 +19,10 @@ public class TeacherInterface {
 	private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 	private String input;
 
-	private StudentController studentController;
+	private StudentService studentService;
 
-	public TeacherInterface(StudentController studentController) {
-		this.studentController = studentController;
+	public TeacherInterface(StudentService studentService) {
+		this.studentService = studentService;
 	}
 
 	public void generalMenu(){
@@ -30,12 +30,11 @@ public class TeacherInterface {
 		while(true){
 			System.out.println("Logged as teacher. Choose command: \n"+
 					"1 - Create test template \n" +
-					"2 - Import test template from file \n" +
+					"2 - See test template \n" +
 					"3 - Create student group \n" +
 					"4 - Assign test for group \n" +
 					"5 - See student test results \n" +
-					"6 - Export student test results \n" +
-					"7 - Return to previous menu");
+					"6 - Return to previous menu");
 
 			try {
 				int command = Integer.parseInt(bufferedReader.readLine());
@@ -44,7 +43,7 @@ public class TeacherInterface {
 						createTestTemplate();
 						break;
 					case 2:
-
+						seeTestTemplate();
 						break;
 					case 3:
 						createStudentGroup();
@@ -56,9 +55,6 @@ public class TeacherInterface {
 						seeStudentTestResults();
 						break;
 					case 6:
-
-						break;
-					case 7:
 						return;
 					default:
 						System.out.println("You entered wrong command number, please try again");
@@ -72,9 +68,43 @@ public class TeacherInterface {
 		}
 	}
 
+	private void seeTestTemplate() throws IOException{
+		TestService controller = new TestService();
+		List<String> list = controller.getTestsNames();
+		int i = 0;
+		System.out.println("List of tests");
+		for(String test : list){
+			System.out.println(++i +". " + test);
+		}
+		System.out.println("Chose number of test you want to see");
+		int testIndex;
+		while(true) {
+			input = bufferedReader.readLine();
+
+			if(Validator.isExit(input)){
+				return;
+			}
+			try {
+				testIndex = Integer.parseInt(input);
+			}catch (NumberFormatException e){
+				System.out.println("Index contains invalid symbols. Please, try again");
+				continue;
+			}
+
+			if(testIndex > i){
+				System.out.println("Index is bigger then list. Please, try again");
+				continue;
+			}
+			break;
+		}
+		Test test = controller.getBy(list.get(--testIndex));
+		System.out.println(test);
+	}
+
+
 	private void seeStudentTestResults() throws IOException {
 
-		List<Student> students = studentController.getStudents();
+		List<Student> students = studentService.getStudents();
 		System.out.println("List of students:");
 		int i = 0;
 		for(Student student: students){
@@ -134,13 +164,14 @@ public class TeacherInterface {
 			break;
 		}
 		String chosenTest = tests.get(--testIndex);
-		CompletedTest completedTest = CompletedTestController.getBy(chosenStudent.getEmail(),chosenTest);
+		com.inventorsoft.model.CompletedTest completedTest = CompletedTestService.getBy(chosenStudent.getEmail(),chosenTest);
 		System.out.println(completedTest);
 	}
 
 	private void createStudentGroup()throws IOException {
 		System.out.println("You are creating student group. Enter number 0 to exit");
 
+		Integer groupId;
 		while(true) {
 			System.out.println("Enter id of group:");
 			input = bufferedReader.readLine();
@@ -153,9 +184,15 @@ public class TeacherInterface {
 				System.out.println("Please, enter valid id");
 				continue;
 			}
+
+			groupId = Integer.parseInt(input);
+			GroupService controller = new GroupService();
+			if(controller.exists(groupId)){
+				System.out.println("This group already exist");
+				continue;
+			}
 			break;
 		}
-		Integer groupId = Integer.parseInt(input);
 
 		while(true) {
 			System.out.println("Enter specialization of group:");
@@ -173,7 +210,7 @@ public class TeacherInterface {
 		}
 		String specialization =  input;
 		Group group = new Group(groupId, specialization, new ArrayList<>());
-		if(GroupController.saveNew(group)) {
+		if(GroupService.saveNew(group)) {
 			System.out.println("You've successfully created new group");
 		}
 
@@ -181,8 +218,8 @@ public class TeacherInterface {
 
 	private void assignTestForGroup() throws IOException {
 
-		GroupController groupController = new GroupController();
-		List<Group> groups = groupController.getGroups();
+		GroupService groupService = new GroupService();
+		List<Group> groups = groupService.getGroups();
 		System.out.println("List of groups:");
 		int i = 0;
 		for(Group group: groups){
@@ -209,8 +246,8 @@ public class TeacherInterface {
 			}
 			break;
 		}
-		TestController testController = new TestController();
-		List<String> tests = testController.getTestsNames();
+		TestService testService = new TestService();
+		List<String> tests = testService.getTestsNames();
 		System.out.println("List of tests:");
 		i = 0;
 		for(String test: tests){
@@ -245,8 +282,8 @@ public class TeacherInterface {
 		else {
 			System.out.println("This test is already assigned to the group");
 		}
-		groupController.update(chosenGroup);
-		groupController.saveAll();
+		groupService.update(chosenGroup);
+		groupService.saveAll();
 	}
 
 	private void createTestTemplate() throws IOException{
@@ -334,7 +371,7 @@ public class TeacherInterface {
 
 
 			while(true) {
-				System.out.println("Enter right answers of question:");
+				System.out.println("Enter right answers of question. Format: 1,2,3");
 				input = bufferedReader.readLine();
 
 				if(Validator.isExit(input)){
@@ -342,7 +379,7 @@ public class TeacherInterface {
 				}
 
 				if(!Validator.isAnswer(input)){
-					System.out.println("Please, enter valid format: 1,2,3...");
+					System.out.println("Please, enter valid format: 1,2,3");
 					continue;
 				}
 				break;
@@ -355,7 +392,7 @@ public class TeacherInterface {
 
 		Test test = new Test(name,questions,answers);
 
-		if(TestController.save(test)) {
+		if(TestService.save(test)) {
 			System.out.println("You have successfully created new test. ");
 		}else {
 			System.out.println("Saving to file failed");

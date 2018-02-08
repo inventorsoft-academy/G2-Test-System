@@ -73,7 +73,7 @@ public class Validator {
 	 * and whitespace character
 	 */
 	static boolean isTestName(String input){
-		Pattern p = Pattern.compile("(\\w+\\s*)+");
+		Pattern p = Pattern.compile("(\\w+\\s*)+[^~]");//without ~
 		Matcher m = p.matcher(input);
 		return  m.matches();
 	}

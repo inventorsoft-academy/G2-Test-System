@@ -1,13 +1,12 @@
-package com.inventorsoft.controllers;
+package com.inventorsoft.service;
 
 import com.inventorsoft.mappers.GroupMapper;
 import com.inventorsoft.model.Group;
-import com.inventorsoft.service.FileManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupController {
+public class GroupService {
 
 	private static final String GROUP_DATA = "src/main/resources/objects/groups.txt";
 
@@ -15,7 +14,7 @@ public class GroupController {
 
 	private GroupMapper groupMapper;
 
-	public GroupController() {
+	public GroupService() {
 		groupMapper = new GroupMapper();
 		this.groups = this.getAll();
 	}
@@ -51,6 +50,9 @@ public class GroupController {
 		return g;
 	}
 
+	public boolean exists(Integer groupId){
+		return groups.stream().map(Group::getGroupId).anyMatch(group->group.equals(groupId));
+	}
 	/** Static, is called without creating controller object, because doesn't need
 	 * information about all groups, just writes to end of file.
 	 * Save new group data to file.

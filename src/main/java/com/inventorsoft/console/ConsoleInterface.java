@@ -1,6 +1,7 @@
 package com.inventorsoft.console;
 
-import com.inventorsoft.controllers.StudentController;
+import com.inventorsoft.service.GroupService;
+import com.inventorsoft.service.StudentService;
 import com.inventorsoft.model.Student;
 import com.inventorsoft.service.AuthorisationService;
 import com.inventorsoft.session.StudentSession;
@@ -30,14 +31,14 @@ public class ConsoleInterface implements CommandLineRunner {
 	private static AuthorisationService service;
 
 	private ApplicationContext applicationContext;
-	private StudentController studentController;
+	private StudentService studentService;
 
 	private StudentSession studentSession;
 	private TeacherInterface teacherInterface;
 
-	public ConsoleInterface(ApplicationContext applicationContext, StudentController studentController) {
+	public ConsoleInterface(ApplicationContext applicationContext, StudentService studentService) {
 		this.applicationContext = applicationContext;
-		this.studentController = studentController;
+		this.studentService = studentService;
 	}
 
 	@Override
@@ -288,6 +289,7 @@ public class ConsoleInterface implements CommandLineRunner {
 		}
 		String password =  input;
 
+		Integer group;
 		while(true) {
 			System.out.println("Enter group:");
 			input = bufferedReader.readLine();
@@ -301,16 +303,17 @@ public class ConsoleInterface implements CommandLineRunner {
 				continue;
 			}
 
-			if(input.length() < 3){
-				System.out.println("Group number is too short. Please, try again");
+			group = Integer.parseInt(input);
+			GroupService controller = new GroupService();
+			if(!controller.exists(group)){
+				System.out.println("There is no such group");
 				continue;
 			}
 			break;
 		}
-		Integer group = Integer.parseInt(input);
 		Student student = new Student(nameSurname,email,password,group);
 
-		if(studentController.saveNew(student)){
+		if(studentService.saveNew(student)){
 			System.out.println("Your account data saved");
 		}else{
 			System.out.println("Failed to save account data");
