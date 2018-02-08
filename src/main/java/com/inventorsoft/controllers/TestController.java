@@ -24,7 +24,9 @@ public class TestController {
 		ArrayList<String> tests = new ArrayList<>();
 		for (File f: listOfFiles) {
 			if (f.isFile()) {
-				tests.add(f.getName());
+				String fileName = f.getName();
+				int index = fileName.indexOf(".test");
+				tests.add(fileName.substring(0,index));
 			}
 		}
 		return tests;
@@ -35,7 +37,7 @@ public class TestController {
 	}
 
 	public static Test getBy(String name){
-		String testString = FileManager.readAll(TESTS_FOLDER + name);
+		String testString = FileManager.readAll(TESTS_FOLDER + name + ".test" );
 		TestMapper tm = new TestMapper();
 		return tm.parse(testString);
 	}

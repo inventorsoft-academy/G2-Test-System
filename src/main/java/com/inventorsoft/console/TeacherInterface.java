@@ -326,7 +326,7 @@ public class TeacherInterface {
 
 
 			while(true) {
-				System.out.println("Enter right answers of question:");
+				System.out.println("Enter right answers of question. Format: 1,2,3");
 				input = bufferedReader.readLine();
 
 				if(Validator.isExit(input)){
@@ -334,7 +334,7 @@ public class TeacherInterface {
 				}
 
 				if(!Validator.isAnswer(input)){
-					System.out.println("Please, enter valid format: 1,2,3...");
+					System.out.println("Please, enter valid format: 1,2,3");
 					continue;
 				}
 				break;
