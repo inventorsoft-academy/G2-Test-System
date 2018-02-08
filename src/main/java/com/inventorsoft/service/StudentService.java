@@ -1,13 +1,12 @@
-package com.inventorsoft.controllers;
+package com.inventorsoft.service;
 
 import com.inventorsoft.mappers.StudentMapper;
 import com.inventorsoft.model.Student;
-import com.inventorsoft.service.FileManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentController {
+public class StudentService {
 
 	private static final String STUDENT_DATA = "src/main/resources/objects/students.txt";
 
@@ -15,7 +14,7 @@ public class StudentController {
 
 	private StudentMapper studentMapper;
 
-	public StudentController() {
+	public StudentService() {
 		studentMapper = new StudentMapper();
 		this.students = getAll();
 	}

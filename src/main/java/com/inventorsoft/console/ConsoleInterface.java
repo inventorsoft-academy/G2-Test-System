@@ -1,7 +1,7 @@
 package com.inventorsoft.console;
 
-import com.inventorsoft.controllers.GroupController;
-import com.inventorsoft.controllers.StudentController;
+import com.inventorsoft.service.GroupService;
+import com.inventorsoft.service.StudentService;
 import com.inventorsoft.model.Student;
 import com.inventorsoft.service.AuthorisationService;
 import com.inventorsoft.session.StudentSession;
@@ -283,7 +283,7 @@ public class ConsoleInterface {
 			}
 
 			group = Integer.parseInt(input);
-			GroupController controller = new GroupController();
+			GroupService controller = new GroupService();
 			if(!controller.exists(group)){
 				System.out.println("There is no such group");
 				continue;
@@ -292,7 +292,7 @@ public class ConsoleInterface {
 		}
 		Student student = new Student(nameSurname,email,password,group);
 
-		if(StudentController.saveNew(student)){
+		if(StudentService.saveNew(student)){
 			System.out.println("Your account data saved");
 		}else{
 			System.out.println("Failed to save account data");

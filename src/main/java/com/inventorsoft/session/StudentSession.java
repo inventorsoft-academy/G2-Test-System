@@ -1,8 +1,7 @@
 package com.inventorsoft.session;
 
-import com.inventorsoft.controllers.CompletedTestController;
-import com.inventorsoft.controllers.StudentController;
-import com.inventorsoft.model.CompletedTest;
+import com.inventorsoft.service.CompletedTestService;
+import com.inventorsoft.service.StudentService;
 import com.inventorsoft.model.Group;
 import com.inventorsoft.model.Student;
 import com.inventorsoft.model.Test;
@@ -13,20 +12,17 @@ import java.util.List;
 public class StudentSession {
 
 	private Student student;
-	private StudentController studentController;
+	private StudentService studentService;
 
 	public boolean start(String email){
-		studentController = new StudentController();
-		student = studentController.getBy(email);
-		if(student == null){
-			return false;
-		}
-		return true;
+		studentService = new StudentService();
+		student = studentService.getBy(email);
+		return student != null;
 	}
 
 	private void finish(){
-		studentController.update(student);
-		studentController.saveAll();
+		studentService.update(student);
+		studentService.saveAll();
 	}
 
 	/** get list of tests that can be passed by this group of student
@@ -53,17 +49,17 @@ public class StudentSession {
 		return student.getTests();
 	}
 
-	public CompletedTest pass(Test test, List<String> answers){
+	public com.inventorsoft.model.CompletedTest pass(Test test, List<String> answers){
 		float mark = TestVerifier.evaluate(test.getRightAnswers(),answers);
-		CompletedTest completedTest = new CompletedTest(test,answers,mark);
-		CompletedTestController.save(student.getEmail(), completedTest);
+		com.inventorsoft.model.CompletedTest completedTest = new com.inventorsoft.model.CompletedTest(test,answers,mark);
+		CompletedTestService.save(student.getEmail(), completedTest);
 		student.addCompletedTest(completedTest.getName());
 		finish();
 		return completedTest;
 	}
 
-	public CompletedTest findCompletedTest(String testName) {
-		return CompletedTestController.getBy(student.getEmail(), testName);
+	public com.inventorsoft.model.CompletedTest findCompletedTest(String testName) {
+		return CompletedTestService.getBy(student.getEmail(), testName);
 	}
 }
 

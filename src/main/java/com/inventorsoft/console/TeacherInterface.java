@@ -1,9 +1,9 @@
 package com.inventorsoft.console;
 
-import com.inventorsoft.controllers.CompletedTestController;
-import com.inventorsoft.controllers.GroupController;
-import com.inventorsoft.controllers.StudentController;
-import com.inventorsoft.controllers.TestController;
+import com.inventorsoft.service.CompletedTestService;
+import com.inventorsoft.service.GroupService;
+import com.inventorsoft.service.StudentService;
+import com.inventorsoft.service.TestService;
 import com.inventorsoft.model.*;
 
 import java.io.BufferedReader;
@@ -61,7 +61,7 @@ public class TeacherInterface {
 	}
 
 	private static void seeTestTemplate() throws IOException{
-		TestController controller = new TestController();
+		TestService controller = new TestService();
 		List<String> list = controller.getTestsNames();
 		int i = 0;
 		System.out.println("List of tests");
@@ -94,8 +94,8 @@ public class TeacherInterface {
 	}
 
 	private static void seeStudentTestResults() throws IOException {
-		StudentController studentController = new StudentController();
-		List<Student> students = studentController.getStudents();
+		StudentService studentService = new StudentService();
+		List<Student> students = studentService.getStudents();
 		System.out.println("List of students:");
 		int i = 0;
 		for(Student student: students){
@@ -155,7 +155,7 @@ public class TeacherInterface {
 			break;
 		}
 		String chosenTest = tests.get(--testIndex);
-		CompletedTest completedTest = CompletedTestController.getBy(chosenStudent.getEmail(),chosenTest);
+		com.inventorsoft.model.CompletedTest completedTest = CompletedTestService.getBy(chosenStudent.getEmail(),chosenTest);
 		System.out.println(completedTest);
 	}
 
@@ -177,7 +177,7 @@ public class TeacherInterface {
 			}
 
 			groupId = Integer.parseInt(input);
-			GroupController controller = new GroupController();
+			GroupService controller = new GroupService();
 			if(controller.exists(groupId)){
 				System.out.println("This group already exist");
 				continue;
@@ -201,7 +201,7 @@ public class TeacherInterface {
 		}
 		String specialization =  input;
 		Group group = new Group(groupId, specialization, new ArrayList<>());
-		if(GroupController.saveNew(group)) {
+		if(GroupService.saveNew(group)) {
 			System.out.println("You've successfully created new group");
 		}
 
@@ -209,8 +209,8 @@ public class TeacherInterface {
 
 	private static void assignTestForGroup() throws IOException {
 
-		GroupController groupController = new GroupController();
-		List<Group> groups = groupController.getGroups();
+		GroupService groupService = new GroupService();
+		List<Group> groups = groupService.getGroups();
 		System.out.println("List of groups:");
 		int i = 0;
 		for(Group group: groups){
@@ -237,8 +237,8 @@ public class TeacherInterface {
 			}
 			break;
 		}
-		TestController testController = new TestController();
-		List<String> tests = testController.getTestsNames();
+		TestService testService = new TestService();
+		List<String> tests = testService.getTestsNames();
 		System.out.println("List of tests:");
 		i = 0;
 		for(String test: tests){
@@ -273,8 +273,8 @@ public class TeacherInterface {
 		else {
 			System.out.println("This test is already assigned to the group");
 		}
-		groupController.update(chosenGroup);
-		groupController.saveAll();
+		groupService.update(chosenGroup);
+		groupService.saveAll();
 	}
 
 	private static void createTestTemplate() throws IOException{
@@ -383,7 +383,7 @@ public class TeacherInterface {
 
 		Test test = new Test(name,questions,answers);
 
-		if(TestController.save(test)) {
+		if(TestService.save(test)) {
 			System.out.println("You have successfully created new test. ");
 		}else {
 			System.out.println("Saving to file failed");

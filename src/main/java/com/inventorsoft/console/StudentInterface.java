@@ -1,6 +1,6 @@
 package com.inventorsoft.console;
 
-import com.inventorsoft.controllers.TestController;
+import com.inventorsoft.service.TestService;
 import com.inventorsoft.model.CompletedTest;
 import com.inventorsoft.model.Question;
 import com.inventorsoft.model.Test;
@@ -123,7 +123,7 @@ public class StudentInterface {
 	 * and see mark (count of correctly  answered questions)
 	 */
 	private static void passTest(String testName)throws IOException{
-		TestController controller = new TestController();
+		TestService controller = new TestService();
 		Test test = controller.getBy(testName);
 		List<String> answers = new ArrayList<>(test.getQuestions().size());
 

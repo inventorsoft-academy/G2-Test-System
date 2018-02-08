@@ -1,20 +1,18 @@
-package com.inventorsoft.controllers;
+package com.inventorsoft.service;
 
 import com.inventorsoft.mappers.CompletedTestMapper;
-import com.inventorsoft.model.CompletedTest;
-import com.inventorsoft.service.FileManager;
 
-public class CompletedTestController {
+public class CompletedTestService {
 	private static final String TESTS_FOLDER = "src/main/resources/passed_tests/";
 
 
-	public static CompletedTest getBy(String folderName, String testName){
+	public static com.inventorsoft.model.CompletedTest getBy(String folderName, String testName){
 		String testString = FileManager.readAll(TESTS_FOLDER + folderName + "/" + testName + ".test");
 		CompletedTestMapper tm = new CompletedTestMapper();
 		return tm.parse(testString);
 	}
 
-	public static boolean save(String folderName, CompletedTest test){
+	public static boolean save(String folderName, com.inventorsoft.model.CompletedTest test){
 		CompletedTestMapper tm = new CompletedTestMapper();
 		String data = tm.format(test);
 		String directoryName = TESTS_FOLDER.concat(folderName);

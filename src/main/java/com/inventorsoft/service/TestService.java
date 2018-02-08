@@ -1,20 +1,19 @@
-package com.inventorsoft.controllers;
+package com.inventorsoft.service;
 
 import com.inventorsoft.mappers.TestMapper;
 import com.inventorsoft.model.Test;
-import com.inventorsoft.service.FileManager;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestController {
+public class TestService {
 
 	private static final String TESTS_FOLDER = "src/main/resources/tests/";
 
 	private List<String> testsNames;
 
-	public TestController() {
+	public TestService() {
 		testsNames = getAll();
 	}
 
