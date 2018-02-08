@@ -1,0 +1,3 @@
+1; Nina New; nina@w.w; www; 502; test without name~test with a lot of variants
+0; Lira Sue; lira@gmail.com; qqq; 301; new test
+0; Kira Meu; kira@k.k; kkk; 204; 

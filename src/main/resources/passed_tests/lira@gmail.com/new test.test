@@ -1,0 +1,12 @@
+Test: new test
+Mark: 2.0
+Question 1. first question of new test
+1. first answer variant
+2. second answer variant
+Right answers: 1
+Student answers: 1
+Question 2. second question of new test
+1. wrong variant
+2. right variant
+Right answers: 2
+Student answers: 2
