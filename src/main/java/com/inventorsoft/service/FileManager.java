@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -90,5 +91,21 @@ public class FileManager {
 		catch (IOException e){
 			e.printStackTrace();
 		}
+	}
+
+	public List<String> getListOfFiles(String directoryName){
+		File folder = new File(directoryName);
+		File[] listOfFiles = folder.listFiles();
+		List<String> list = new LinkedList<>();
+		if(listOfFiles == null){
+			return list;
+		}
+		for (File f: listOfFiles) {
+			if (f.isFile()) {
+				String fileName = f.getName();
+				list.add(fileName);
+			}
+		}
+		return list;
 	}
 }

@@ -2,31 +2,31 @@ package com.inventorsoft.service;
 
 import com.inventorsoft.mappers.TestMapper;
 import com.inventorsoft.model.Test;
+import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class TestService {
 
 	private static final String TESTS_FOLDER = "src/main/resources/tests/";
+	private static final String TEST_FILE_EXTENSION = ".test";
 
 	private List<String> testsNames;
+	private FileManager fileManager;
 
-	public TestService() {
+	public TestService(FileManager fileManager) {
+		this.fileManager = fileManager;
 		testsNames = getAll();
 	}
 
 	private ArrayList<String> getAll() {
-		File folder = new File(TESTS_FOLDER);
-		File[] listOfFiles = folder.listFiles();
 		ArrayList<String> tests = new ArrayList<>();
-		for (File f: listOfFiles) {
-			if (f.isFile()) {
-				String fileName = f.getName();
-				int index = fileName.indexOf(".test");
-				tests.add(fileName.substring(0,index));
-			}
+		List<String> listOfFiles = fileManager.getListOfFiles(TESTS_FOLDER);
+		for (String f: listOfFiles) {
+			int index = f.indexOf(TEST_FILE_EXTENSION);
+			tests.add(f.substring(0,index));
 		}
 		return tests;
 	}
@@ -36,15 +36,15 @@ public class TestService {
 	}
 
 	public Test getBy(String name){
-		String testString = FileManager.readAll(TESTS_FOLDER + name + ".test" );
+		String testString = FileManager.readAll(TESTS_FOLDER + name + TEST_FILE_EXTENSION);
 		TestMapper tm = new TestMapper();
 		return tm.parse(testString);
 	}
 
-	public static boolean save(Test test){
+	public boolean save(Test test){
 		TestMapper tm = new TestMapper();
 		String data = tm.format(test);
-		FileManager.writeTo(TESTS_FOLDER + test.getName() + ".test" , data);
+		FileManager.writeTo(TESTS_FOLDER + test.getName() + TEST_FILE_EXTENSION, data);
 		return true;
 	}
 }

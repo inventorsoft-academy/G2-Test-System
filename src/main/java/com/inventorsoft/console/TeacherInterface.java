@@ -20,9 +20,11 @@ public class TeacherInterface {
 	private String input;
 
 	private StudentService studentService;
+	private TestService testService;
 
-	public TeacherInterface(StudentService studentService) {
+	public TeacherInterface(StudentService studentService, TestService testService) {
 		this.studentService = studentService;
+		this.testService = testService;
 	}
 
 	public void generalMenu(){
@@ -69,8 +71,7 @@ public class TeacherInterface {
 	}
 
 	private void seeTestTemplate() throws IOException{
-		TestService controller = new TestService();
-		List<String> list = controller.getTestsNames();
+		List<String> list = testService.getTestsNames();
 		int i = 0;
 		System.out.println("List of tests");
 		for(String test : list){
@@ -97,7 +98,7 @@ public class TeacherInterface {
 			}
 			break;
 		}
-		Test test = controller.getBy(list.get(--testIndex));
+		Test test = testService.getBy(list.get(--testIndex));
 		System.out.println(test);
 	}
 
@@ -133,7 +134,7 @@ public class TeacherInterface {
 		}
 		Student chosenStudent = students.get(--studentIndex);
 		List<String> tests = chosenStudent.getTests();
-		if(tests.size() == 0){
+		if(tests.isEmpty()){
 			System.out.println("This student have no passed tests");
 			return;
 		}
@@ -246,7 +247,7 @@ public class TeacherInterface {
 			}
 			break;
 		}
-		TestService testService = new TestService();
+
 		List<String> tests = testService.getTestsNames();
 		System.out.println("List of tests:");
 		i = 0;
@@ -392,7 +393,7 @@ public class TeacherInterface {
 
 		Test test = new Test(name,questions,answers);
 
-		if(TestService.save(test)) {
+		if(testService.save(test)) {
 			System.out.println("You have successfully created new test. ");
 		}else {
 			System.out.println("Saving to file failed");

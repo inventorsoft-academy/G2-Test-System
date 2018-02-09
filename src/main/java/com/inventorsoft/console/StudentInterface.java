@@ -5,6 +5,8 @@ import com.inventorsoft.model.CompletedTest;
 import com.inventorsoft.model.Question;
 import com.inventorsoft.model.Test;
 import com.inventorsoft.session.StudentSession;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,12 +14,21 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
+@Scope("prototype")
 public class StudentInterface {
 
-	private static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-	private static String input;
-	private static StudentSession session;
-	public static void generalMenu(StudentSession ss){
+	private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+	private String input;
+	private StudentSession session;
+
+	private TestService testService;
+
+	public StudentInterface(TestService testService) {
+		this.testService = testService;
+	}
+
+	public void generalMenu(StudentSession ss){
 		session = ss;
 		while(true){
 			System.out.println(" Choose command: \n"+
@@ -52,7 +63,7 @@ public class StudentInterface {
 		}
 	}
 
-	private static void seePassedTests()throws IOException {
+	private void seePassedTests()throws IOException {
 		List<String> list = session.getPassedTests();
 		System.out.println("List of passed tests: ");
 		int i = 0;
@@ -82,12 +93,12 @@ public class StudentInterface {
 		}
 	}
 
-	private static void printTest(String testName) {
+	private void printTest(String testName) {
 		CompletedTest test = session.findCompletedTest(testName);
 		System.out.println(test.toString());
 	}
 
-	private static void seeAvailableTests()throws IOException {
+	private void seeAvailableTests()throws IOException {
 		List<String> list = session.getAvailableTests();
 		System.out.println("List of available tests to pass: ");
 		int i = 0;
@@ -122,9 +133,8 @@ public class StudentInterface {
 	 * in the end they can compare their answers and correct answers
 	 * and see mark (count of correctly  answered questions)
 	 */
-	private static void passTest(String testName)throws IOException{
-		TestService controller = new TestService();
-		Test test = controller.getBy(testName);
+	private void passTest(String testName)throws IOException{
+		Test test = testService.getBy(testName);
 		List<String> answers = new ArrayList<>(test.getQuestions().size());
 
 		System.out.println("Test: " + testName);

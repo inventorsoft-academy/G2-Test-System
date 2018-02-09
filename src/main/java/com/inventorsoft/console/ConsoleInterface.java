@@ -35,6 +35,7 @@ public class ConsoleInterface implements CommandLineRunner {
 
 	private StudentSession studentSession;
 	private TeacherInterface teacherInterface;
+	private StudentInterface studentInterface;
 
 	public ConsoleInterface(ApplicationContext applicationContext, StudentService studentService) {
 		this.applicationContext = applicationContext;
@@ -219,7 +220,8 @@ public class ConsoleInterface implements CommandLineRunner {
 			}
 			System.out.println("Welcome, " + studentSession.getStudentName() + " !");
 			System.out.println("You have successfully logged as student");
-			StudentInterface.generalMenu(studentSession);
+			studentInterface = applicationContext.getBean(StudentInterface.class);
+			studentInterface.generalMenu(studentSession);
 		}else {
 			System.out.println("Login failed");
 		}
