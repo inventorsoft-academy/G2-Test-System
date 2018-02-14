@@ -1,18 +1,16 @@
 package com.inventorsoft.model;
 
+import lombok.Value;
+
 import java.util.List;
 
 /**
  * Created by Nina on 14.01.2018.
  */
+@Value
 public class Question {
 	private String question;
 	private List<String> answerVariants;
-
-	public Question(String question, List<String> answers) {
-		this.question = question;
-		this.answerVariants = answers;
-	}
 
 	/**
 	 * @return question and its variants

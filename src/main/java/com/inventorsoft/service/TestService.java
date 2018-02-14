@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class TestService {
@@ -39,6 +40,13 @@ public class TestService {
 		String testString = FileManager.readAll(TESTS_FOLDER + name + TEST_FILE_EXTENSION);
 		TestMapper tm = new TestMapper();
 		return tm.parse(testString);
+	}
+
+	public Optional<Test> getOptionalWithTestBy(String name){
+		String testString = FileManager.readAll(TESTS_FOLDER + name + TEST_FILE_EXTENSION);
+		TestMapper tm = new TestMapper();
+		return  Optional.ofNullable(tm.parse(testString));
+
 	}
 
 	public boolean save(Test test){

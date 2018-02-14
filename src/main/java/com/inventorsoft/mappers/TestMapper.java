@@ -26,6 +26,9 @@ public class TestMapper implements DataMapper<Test> {
 
 	@Override
 	public Test parse(String test) {
+		if(test.isEmpty()){
+			return null;
+		}
 		String[] questions = test.split("Question ");
 		ArrayList<Question> questionsList = new ArrayList<>();
 		ArrayList<String> answersList = new ArrayList<>();
